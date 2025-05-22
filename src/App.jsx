@@ -27,8 +27,15 @@ import { Toaster } from "react-hot-toast";
 import axios from "axios";
 import Notification from './Notification';
 
+import { SplitText } from "gsap/SplitText";
+import { ScrambleTextPlugin } from "gsap/ScrambleTextPlugin";
+
+
 // Register the plugin
 gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(SplitText);
+gsap.registerPlugin(ScrambleTextPlugin);
+
 
 function App() {
   const [isOpen, setIsOpen] = useState(false);
@@ -134,7 +141,36 @@ function App() {
 
   useGSAP(() => {
     const sections = gsap.utils.toArray("#section");
+    const media = gsap.matchMedia();
 
+    const split = new SplitText(".firstText", {
+      type: "words,chars",
+    });
+
+    const aboutME = new SplitText(".aboutMe", {
+      type: "words,chars",
+    });
+
+    const s3Text = new SplitText(".s3Text", {
+      type: "words,chars",
+    });
+
+    const s3Para = new SplitText(".s3Para", {
+      type: "words,chars",
+    });
+
+    const techStack = new SplitText(".techStack", {
+      type: "words,chars",
+    });
+
+    
+
+    
+
+    
+    const aboutPara = new SplitText(".aboutMePara", {
+      type: "words,chars",
+    });
     gsap.to(sections, {
       xPercent: -100 * (sections.length - 1),
       ease: "none",
@@ -147,6 +183,208 @@ function App() {
         end: () => "+=" + window.innerWidth * (sections.length - 1),
       },
     });
+
+     // Mobile animation
+     media.add("(max-width: 480px)", () => {
+      gsap.from(split.words, {
+        duration: .8,
+        opacity: 0,
+        y: 50,
+        stagger: 0.1,
+        ease: "back.out",
+      });
+     });
+
+     gsap.from(aboutME.chars, {
+      opacity: 0,
+      y: -100,
+      x: 100,
+      stagger: 0.1,
+      ease: "back.out",
+      scrollTrigger: {
+        trigger: aboutME.chars,
+        markers: false,
+        start: "800% 100%",
+        end: "1000% 80%",
+        scrub: 1,
+      },
+    });
+
+    gsap.from(aboutPara.words, {
+      // duration: 1,
+      opacity: 0,
+      y: 70,
+      rotateZ:"50",
+      stagger: 0.1,
+      ease: "back.out",
+      // pin:true,
+      scrollTrigger: {
+        trigger: aboutPara.words,
+        markers: false,
+        start: "1200% 95%",
+        end: "1400% 75%",
+        scrub: 1.5,
+      },
+    });
+
+    gsap.from(s3Text.words, {
+      // duration: 1,
+      opacity: 0,
+      x: 500,
+      stagger: 0.1,
+      // ease: "back.out",
+      scrollTrigger: {
+        trigger: s3Text.words,
+        markers: false,
+        start: "0% 90%",
+        end: "400% 70%",
+        scrub: 1,
+      },
+    });
+
+    gsap.from(s3Para.chars, {
+      // duration: 1,
+      // opacity: 0,
+      scale:0,
+      y: 50,
+      stagger: 0.1,
+      // ease: "back.out",
+      scrollTrigger: {
+        trigger: s3Para.chars,
+        markers: false,
+        start: "0% 90%",
+        end: "400% 70%",
+        scrub: 1,
+      },
+    });
+
+    gsap.from(techStack.chars, {
+      // duration: 1,
+      scale: 0,
+      rotateZ: 200,
+      x: 100,
+      y: -100,
+      stagger: 0.1,
+      ease: "back.out",
+      scrollTrigger: {
+        trigger: techStack.chars,
+        markers: false,
+        start: "3300% 90%",
+        end: "3500% 70%",
+        scrub: 1,
+      },
+    });
+
+    gsap.from(".uiService",{
+      opacity:0,
+      scale:0,
+      stagger: 0.4,
+      // ease: "back.out",
+      scrollTrigger: {
+        trigger: ".uiService",
+        markers: false,
+        start: "0% 80%",
+        end: "100% 70%",
+        scrub: 1,
+      },
+    });
+
+    gsap.set(
+      [".frontend","blockchain", ".backend", ".os", ".dev", ".hosting", ".cybertools"],
+      {
+        scale: 1,
+        opacity: 1,
+        y: 0,
+        x: 0,
+        borderRadius: 10,
+      }
+    );
+
+    gsap.from(".frontend", {
+      // borderRadius: 50,
+      // scale: 0.1,
+      x: 500,
+      opacity: 0,
+      // ease: "back.out",
+      stagger: 0.1,
+      scrollTrigger: {
+        trigger: ".frontend",
+        start: "0px 100%",
+        end: "1000px 0%",
+        markers: false,
+        scrub: 1,
+      },
+    });
+
+    gsap.from(".backend", {
+      
+      x: -500,
+      opacity: 0,
+      ease: "back.inOut",
+      stagger: 0.1,
+      scrollTrigger: {
+        trigger: ".backend",
+        start: "0px 80%",
+        end: "400px 70%",
+        markers: false,
+        scrub: 1,
+      },
+    });
+
+    gsap.from(".blockchain", {
+      borderRadius: 100,
+      scale: 0.1,
+      // x: -1000,
+      // opacity: 0,
+      ease: "back.inOut",
+      stagger: 0.1,
+      scrollTrigger: {
+        trigger: ".blockchain",
+        start: "0px 80%",
+        end: "200px 65%",
+        markers: false,
+        scrub: 1,
+      },
+    });
+
+
+    gsap.from(".os", {
+      
+      rotateX:"100",
+      ease: "back.inOut",
+      stagger: 0.1,
+      scrollTrigger: {
+        trigger: ".os",
+        start: "0px 80%",
+        end: "100px 70%",
+        markers: false,
+        scrub: 1,
+      },
+    });
+
+    gsap.from(".dev", {
+      borderRadius: 50,
+      scale: 0.1,
+      x: 1000,
+      opacity: 0,
+      ease: "back.inOut",
+      stagger: 0.1,
+      scrollTrigger: {
+        trigger: ".dev",
+        start: "0px 80%",
+        end: "100px 70%",
+        markers: true,
+        scrub: 1,
+      },
+    });
+
+
+
+
+
+
+
+
   });
 
   return (
@@ -154,7 +392,12 @@ function App() {
       {/* is upar wali me bhi overflow hidden he */}
       <div className="w-full overflow-hidden py-0  ">
         {/* Navbar */}
-        <nav className="w-full bg-[#070E16] flex justify-center items-center">
+        <motion.nav 
+          initial={{ y: -100 }}
+          animate={{ y: 0 }}
+          transition={{ duration: 0.8, delay: 0.8 }}
+          className="w-full bg-[#070E16] flex justify-center items-center"
+        >
           <div className="w-[85vw] sm:w-[65vw] flex justify-between items-center">
             <div className=" overflow-hidden px-2 rounded w-12 h-12 flex justify-center items-center">
               <img
@@ -212,7 +455,7 @@ function App() {
               ></motion.span>
             </button>
           </div>
-        </nav>
+        </motion.nav>
         {/* Aside bar menu  */}
         <motion.div
           initial={{ x: "100%", opacity: 0 }}
@@ -255,7 +498,7 @@ function App() {
               transition={{ delay: 0.2 }}
             >
               <ul className="space-y-6">
-                {["Home", "Properties", "About", "Contact"].map(
+                {["Home", "Github", "Resume", "Contact ME"].map(
                   (item, index) => (
                     <motion.li
                       key={index}
@@ -287,9 +530,8 @@ function App() {
         {/*  */}
         <div
           className=" 
-bg-[#11081F]
-      
-      w-full flex justify-center items-center overflow-hidden flex-col"
+        bg-[#11081F]    
+          w-full flex justify-center items-center overflow-hidden flex-col"
         >
           {/* 1st Section */}
           <div className=" w-[85vw] sm:w-[65vw] h-screen  text-white flex justify-center items-center ">
@@ -305,7 +547,7 @@ bg-[#11081F]
                 alt=""
               />
 
-              <h1 className="text-[60px]  w-full backdrop-blur-xs text-center z-0  leading-13">
+              <h1 className="firstText text-[60px]  w-full backdrop-blur-xs text-center z-0  leading-13">
                 I'm <br /> Gaurav Mahajan
               </h1>
             </div>
@@ -313,8 +555,8 @@ bg-[#11081F]
 
           {/* 2nd Section */}
           <div className=" w-[85vw] sm:w-[65vw] h-screen  text-white flex justify-center items-center  flex-col">
-            <h1 className="mb-10 text-3xl">About ME</h1>
-            <p>
+            <h1 className="aboutMe mb-10 text-[45px]">About ME</h1>
+            <p className="aboutMePara">
               Hey there! I'm Gaurav Mahajan, a passionate MERN stack developer
               on a mission to create the world’s best websites — and one day,
               earn the title of the world’s best web developer.
@@ -349,20 +591,19 @@ bg-[#11081F]
                 alt="gradient"
               />
               <div className=" z-1 ">
-                <h1 className="md:text-2xl text-[20px]  backdrop-blur-xs  text-center w-full">
-                  I’m looking for an opportunity to contribute to a
-                  mission-driven team{" "}
+                <h1 className="s3Text md:text-2xl text-[30px] leading-7  backdrop-blur-xs  text-center w-full">
+                  Helping startups and businesses scale with full-stack website and Web3 solutions to increase revenue.
                 </h1>
-                <p className="text-center w-full mt-1 text-[15px]">
-                  where design and development come together to{" "}
-                  <span className="backdrop-blur-xs  underline">
-                    improve lives{" "}
-                  </span>{" "}
-                  and solve{" "}
-                  <span className="backdrop-blur-xs  underline">
-                    real-world problems
+                <p className="s3Para text-center w-full mt-3 text-md">
+                Design and development with   
+                  <span className="backdrop-blur-xs mx-1 font-bold ">
+                  purpose — built
                   </span>
-                  .
+                  to 
+                  <span className="backdrop-blur-xs mx-1 font-bold ">
+                  solve real problems.
+                  </span>
+                  
                 </p>
               </div>
             </div>
@@ -396,11 +637,11 @@ bg-[#11081F]
           {/* 4th Section tech stack */}
           <div className="w-[85vw] sm:w-[65vw]  text-white flex justify-center items-center relative flex-col">
             {/* horizontal div */}
-            <h1 className="text-4xl mb-6">Tech Stack</h1>
+            <h1 className=" techStack text-4xl mb-6">Tech Stack</h1>
             <div className="w-full relative flex justify-center items-center flex-col ">
               {/* UI/UX  */}
 
-              <div className="bg-linear-to-tl to-[#ffffff35] border-2  border-[#ffffff30]  py-4 w-full   rounded-2xl backdrop-blur-2xl">
+              <div className="uiService bg-linear-to-tl to-[#ffffff35] border-2  border-[#ffffff30]  py-4 w-full   rounded-2xl backdrop-blur-2xl">
                 <h1 className="text-center text-3xl sm:text-4xl text-white">
                   UI/UX
                 </h1>
@@ -417,7 +658,7 @@ bg-[#11081F]
                 </div>
               </div>
               {/* Services */}
-              <div className="bg-linear-to-tl to-[#ffffff35] border-2         border-[#ffffff30] py-4 w-full mt-4  rounded-2xl backdrop-blur-2xl">
+              <div className="uiService bg-linear-to-tl to-[#ffffff35] border-2   border-[#ffffff30] py-4 w-full mt-4  rounded-2xl backdrop-blur-2xl">
                 <h1 className="text-center  text-3xl sm:text-4xl text-white backdrop-blur-2xl">
                   Service
                 </h1>
@@ -434,6 +675,7 @@ bg-[#11081F]
               </div>
 
               {/* gradients */}
+              <div>
               <img
                 className="absolute top-1200 left-90 scale-200 "
                 src={`${gradient}`}
@@ -469,6 +711,7 @@ bg-[#11081F]
                 src={`${gradient}`}
                 alt=""
               />
+              </div>
 
               {/* frontend */}
               <div className=" backdrop-blur-2xl w-full bg-linear-to-tl to-[#ffffff18] border-[1.5px]   border-[#ffffff40]   py-5 mt-7 rounded-2xl">
@@ -907,7 +1150,7 @@ bg-[#11081F]
                         src={`${soldity}`}
                         alt="soldity"
                       />
-                      <h1 className="bg-white rounded-md text-[#000] px-3 py-1 mt-2">
+                      <h1 className="bg-white blockchain rounded-md text-[#000] px-3 py-1 mt-2">
                         Solidity
                       </h1>
                     </div>
@@ -921,7 +1164,7 @@ bg-[#11081F]
                         src={`${hardhat}`}
                         alt="hardhat"
                       />
-                      <h1 className="bg-white rounded-md text-[#000] px-3 py-1 mt-2">
+                      <h1 className="bg-white blockchain rounded-md text-[#000] px-3 py-1 mt-2">
                         Hardhat
                       </h1>
                     </div>
@@ -935,7 +1178,7 @@ bg-[#11081F]
                         src={`${etherjs}`}
                         alt="etherjs"
                       />
-                      <h1 className="bg-white rounded-md text-[#2739a0] px-3 py-1 mt-2">
+                      <h1 className="bg-white blockchain rounded-md text-[#2739a0] px-3 py-1 mt-2">
                         EtherJS
                       </h1>
                     </div>
@@ -948,8 +1191,8 @@ bg-[#11081F]
                         className="blockchain w-[20vw] sm:w-[15vw] md:w-[12vw] lg:w-[10vw] xl:w-[7vw] 2xl:w-[6vw] h-auto rounded-lg"
                         src={`${alchemy}`}
                         alt=""
-                      />
-                      <h1 className="text-white rounded-md  bg-linear-to-tl  to-[#0055FE] from-[#1ABBF2] px-3 py-1 mt-2">
+                      /> 
+                      <h1 className="text-white blockchain rounded-md  bg-linear-to-tl  to-[#0055FE] from-[#1ABBF2] px-3 py-1 mt-2">
                         Alchemy
                       </h1>
                     </div>
@@ -964,7 +1207,7 @@ bg-[#11081F]
                         alt="metamask"
                       />
 
-                      <h1 className="bg-white rounded-md text-[#FF5722] px-3 py-1 mt-2">
+                      <h1 className="bg-white blockchain rounded-md text-[#FF5722] px-3 py-1 mt-2">
                         Metamask
                       </h1>
                     </div>
@@ -979,7 +1222,7 @@ bg-[#11081F]
                         alt="chai"
                       />
 
-                      <h1 className="bg-white rounded-md text-[#9C0000] px-3 py-1 mt-2">
+                      <h1 className="bg-white blockchain rounded-md text-[#9C0000] px-3 py-1 mt-2">
                         Chai
                       </h1>
                     </div>
@@ -994,7 +1237,7 @@ bg-[#11081F]
                         alt="mocha"
                       />
 
-                      <h1 className="bg-white rounded-md text-[#8D6748] px-3 py-1 mt-2">
+                      <h1 className="bg-white blockchain rounded-md text-[#8D6748] px-3 py-1 mt-2">
                         Mocha
                       </h1>
                     </div>
