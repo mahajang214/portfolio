@@ -911,7 +911,7 @@ function App() {
 
             <button
               onClick={handleMenuClick}
-              className={`w-[8vw] h-[4.5vh] cursor-pointer flex flex-col items-center justify-center md:hidden px-[1px] rounded transition-all duration-200 ${
+              className={`w-[8vw] h-[4.5vh] cursor-pointer flex flex-col items-center justify-center sm:hidden px-[1px] rounded transition-all duration-200 ${
                 isOpen ? `gap-0` : `gap-[2px]`
               }`}
             >
