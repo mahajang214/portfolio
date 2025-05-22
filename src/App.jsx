@@ -1983,9 +1983,9 @@ function App() {
               alt=""
             />
             {/* macbook code */}
-            <div className="w-full projectsP1 rounded-lg pt-2 pl-2 border-l-2 border-l-[#ffffff79] border-t-2 border-t-[#ffffff79] bg-linear-to-tl to-[#7127BA] to-60% from-[#fff]  overflow-hidden backdrop-blur-lg">
+            <div className="w-full projectsP1 rounded-lg pt-2 pl-2 border-l-2 border-l-[#ffffff79] border-t-2 border-t-[#ffffff79] bg-linear-to-tl to-[#7127BA]  to-60% from-[#fff]  overflow-hidden backdrop-blur-lg">
               <img
-                className="backdrop-blur-2xl scale-[3] translate-x-[320px] translate-y-[210px]"
+                className="backdrop-blur-2xl scale-[3] translate-x-[320px] translate-y-[210px] sm:translate-x-[100%] sm:translate-y-[100%]"
                 src={`${project1}`}
                 alt=""
               />
@@ -2081,7 +2081,8 @@ function App() {
             {/* macbook code */}
             <div className="w-full rounded-lg pt-2 pl-2 border-l-2 border-l-[#ffffff79] border-t-2 projectsP2 border-t-[#ffffff79] bg-linear-to-tl to-[#7127BA] to-60% from-[#fff]  overflow-hidden backdrop-blur-lg">
               <img
-                className={`scale-[3]   ${
+                className={`scale-[3]  sm:translate-x-[100%] sm:translate-y-[100%]
+                   ${
                   openSecondProject
                     ? "translate-x-[250px] translate-y-[170px]"
                     : "translate-x-[320px] translate-y-[210px]"
