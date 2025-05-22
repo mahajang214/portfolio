@@ -6,6 +6,25 @@ import elipse21 from "./assets/Ellipse 21.png";
 import elipse22 from "./assets/Ellipse 22.png";
 import elipse23 from "./assets/Ellipse 23.png";
 
+import soldity from "./assets/solidity.png";
+import hardhat from "./assets/hardhat.png";
+import alchemy from "./assets/alchemy.png";
+import chai from "./assets/chai.png";
+import mocha from "./assets/mocha.png";
+import etherjs from "./assets/etherJS.png";
+import metamask from "./assets/metamask.png";
+
+import remix from './assets/remix.png'
+
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
+
+// Register the plugin
+gsap.registerPlugin(ScrollTrigger);
+
+
+
 function App() {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -13,7 +32,27 @@ function App() {
     setIsOpen(!isOpen);
   };
 
+  useGSAP(()=>{
+    const sections = gsap.utils.toArray("#section");
+
+    gsap.to(sections, {
+      xPercent: -100 * (sections.length - 1),
+      ease: "none",
+      scrollTrigger: {
+        trigger: "#scrollContainer",
+        start: "top top",
+        pin: true,
+        scrub: 0.5,
+        markers: false,
+        end: () => "+=" + window.innerWidth * (sections.length - 1),
+      },
+    });
+
+  })
+
   return (
+    <div className="w-full   mt-0 mb-0  ">
+      {/* is upar wali me bhi overflow hidden he */}
     <div className="w-full overflow-hidden py-0  ">
       {/* Navbar */}
       <nav className="w-full bg-[#070E16] flex justify-center items-center">
@@ -255,13 +294,13 @@ bg-[#11081F]
         {/* 4th Section tech stack */}
         <div className="w-[85vw] sm:w-[65vw]  text-white flex justify-center items-center relative flex-col">
           {/* horizontal div */}
-          
+          <h1 className="text-4xl mb-6">Tech Stack</h1>
           <div className="w-full relative flex justify-center items-center flex-col ">
 
             {/* UI/UX  */}
             
          
-         <div className="bg-linear-to-tl to-[#ffffff35] border-2  border-[#ffffff30]  py-4 w-full   rounded-2xl">
+         <div className="bg-linear-to-tl to-[#ffffff35] border-2  border-[#ffffff30]  py-4 w-full   rounded-2xl backdrop-blur-2xl">
                   <h1 className="text-center text-3xl sm:text-4xl text-white">
                     UI/UX
                   </h1>
@@ -278,13 +317,13 @@ bg-[#11081F]
                   </div>
                 </div>
         {/* Services */}
-                <div className="bg-linear-to-tl to-[#ffffff35] border-2  border-[#ffffff30] py-4 w-full mt-4  rounded-2xl">
-                  <h1 className="text-center  text-3xl sm:text-4xl text-white">
+                <div className="bg-linear-to-tl to-[#ffffff35] border-2         border-[#ffffff30] py-4 w-full mt-4  rounded-2xl backdrop-blur-2xl">
+                  <h1 className="text-center  text-3xl sm:text-4xl text-white backdrop-blur-2xl">
                     Service
                   </h1>
-                  <div className="w-full flex mt-3 flex-col justify-center items-center">
+                  <div className="w-full flex mt-3 flex-col justify-center items-center backdrop-blur-2xl">
                     <img
-                      className="ui-ux-services w-[20vw] sm:w-[15vw] md:w-[12vw] lg:w-[10vw] xl:w-[7vw] 2xl:w-[6vw] h-auto overflow-hidden rounded-full "
+                      className="ui-ux-services w-[20vw] sm:w-[15vw] md:w-[12vw] lg:w-[10vw] xl:w-[7vw] 2xl:w-[6vw] h-auto overflow-hidden rounded-full backdrop-blur-2xl "
                       src="data:image/jpeg;base64,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"
                       alt="Appwrite"
                     />
@@ -297,9 +336,20 @@ bg-[#11081F]
               
 
             {/* gradients */}
-            <img className="absolute top-50 -left-70 scale-200 " src={`${gradient}`} alt="" />
+            <img className="absolute top-1200 left-90 scale-200 " src={`${gradient}`} alt="" />
+
+          
 
             <img className="absolute top-150 left-70 scale-200 " src={`${gradient}`} alt="" />
+
+            <img className="absolute top-500 -left-70 scale-200 " src={`${gradient}`} alt="" />
+
+            <img className="absolute top-700 left-70 scale-200 " src={`${gradient}`} alt="" />
+
+            <img className="absolute top-1000 -left-90 scale-200 " src={`${gradient}`} alt="" />
+
+
+            <img className="absolute top-1200 left-90 scale-200 " src={`${gradient}`} alt="" />
 
             {/* frontend */}
             <div className=" backdrop-blur-2xl w-full bg-linear-to-tl to-[#ffffff18] border-[1.5px]   border-[#ffffff40]   py-5 mt-7 rounded-2xl">
@@ -643,7 +693,7 @@ bg-[#11081F]
             </div>
 
                           {/* Backend */}
-                          <div className="bg-linear-to-br to-[#ffffff35] border-2  border-[#ffffff30]  w-[90%] py-5 mt-10 rounded-2xl">
+                          <div className="bg-linear-to-br to-[#ffffff35] border-2  border-[#ffffff30]  w-[90%] py-5 mt-10 rounded-2xl backdrop-blur-2xl">
                 <h1 className="text-white text-3xl sm:text-4xl text-center">
                   Backend
                 </h1>
@@ -723,8 +773,75 @@ bg-[#11081F]
               </div>
 
 
+              {/* Block Chain */}
+              <div className=" backdrop-blur-2xl w-full bg-linear-to-tl to-[#ffffff18] border-[1.5px]  border-[#ffffff40]   py-5 mt-7 rounded-2xl">
+              <h1 className="text-white text-3xl sm:text-4xl text-center">
+                Block-Chain
+              </h1>
+              <div className="w-full py-1  mt-3  flex justify-center items-center ">
+                <div className=" grid grid-cols-2  md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-10 lg:gap-2">
+
+                <div
+                    id="html"
+                    className=" h-full w-[20vw]  lg:w-[20vw] flex flex-col justify-center items-center rounded-2xl"
+                  >
+                  <img className="blockchain w-[20vw] sm:w-[15vw] md:w-[12vw] lg:w-[10vw] xl:w-[7vw] 2xl:w-[6vw] h-auto rounded-lg" src={`${soldity}`} alt="soldity" />
+                    <h1 className="bg-white rounded-md text-[#000] px-3 py-1 mt-2">
+                      Solidity
+                    </h1>
+                  </div>
+
+                  <div
+                    id="html"
+                    className=" h-full w-[20vw]  lg:w-[20vw] flex flex-col justify-center items-center rounded-2xl"
+                  >
+                  <img className="blockchain w-[20vw] sm:w-[15vw] md:w-[12vw] lg:w-[10vw] xl:w-[7vw] 2xl:w-[6vw] h-auto rounded-lg" src={`${hardhat}`} alt="hardhat" /> 
+                    <h1 className="bg-white rounded-md text-[#000] px-3 py-1 mt-2">
+                      Hardhat
+                    </h1>
+                  </div>
+
+                  <div
+                    id="html"
+                    className=" h-full w-[20vw]  lg:w-[20vw] flex flex-col justify-center items-center rounded-2xl"
+                  >
+                    <img className="blockchain w-[20vw] sm:w-[15vw] md:w-[12vw] lg:w-[10vw] xl:w-[7vw] 2xl:w-[6vw] h-auto rounded-lg" src={`${etherjs}`} alt="etherjs" />
+                    <h1 className="bg-white rounded-md text-[#2739a0] px-3 py-1 mt-2">
+                      EtherJS
+                    </h1>
+                  </div>
+
+                  <div
+                    id="html"
+                    className=" h-full w-[20vw]  lg:w-[20vw] flex flex-col justify-center items-center rounded-2xl"
+                  >
+                    <img className="blockchain w-[20vw] sm:w-[15vw] md:w-[12vw] lg:w-[10vw] xl:w-[7vw] 2xl:w-[6vw] h-auto rounded-lg" src={`${alchemy}`} alt="" />
+                    <h1 className="text-white rounded-md  bg-linear-to-tl  to-[#0055FE] from-[#1ABBF2] px-3 py-1 mt-2">
+                      Alchemy
+                    </h1>
+                  </div>
+
+                  <div
+                    id="metamask"
+                    className=" h-full w-[20vw]  lg:w-[20vw] flex flex-col justify-center items-center rounded-2xl"
+                  >
+                   <img className="blockchain w-[20vw] sm:w-[15vw] md:w-[12vw] lg:w-[10vw] xl:w-[7vw] 2xl:w-[6vw] h-auto rounded-lg" src={`${metamask}`} alt="metamask" />
+                      
+                      
+                    <h1 className="bg-white rounded-md text-[#FF5722] px-3 py-1 mt-2">
+                      Metamask
+                    </h1>
+                  </div>
+
+
+
+                </div>
+                </div>
+                </div>
+
+
               {/* OS */}
-              <div className="bg-linear-to-tr to-[#ffffff35] border-2  border-[#ffffff30]   w-[90%] py-5 mt-10 rounded-2xl">
+              <div className="bg-linear-to-tr to-[#ffffff35] border-2 backdrop-blur-2xl  border-[#ffffff30]   w-[90%] py-5 mt-10 rounded-2xl">
                 <h1 className="text-white text-3xl sm:text-4xl text-center">
                   Operating Systems
                 </h1>
@@ -777,7 +894,7 @@ bg-[#11081F]
 
 
              {/* Development Software */}
-             <div className="bg-linear-to-bl to-[#ffffff35] border-2  border-[#ffffff30]  w-[90%] py-5 mt-10 rounded-2xl">
+             <div className="bg-linear-to-bl to-[#ffffff35] border-2  border-[#ffffff30]  w-[90%] py-5 mt-10 rounded-2xl backdrop-blur-2xl">
                 <h1 className="text-white text-3xl sm:text-4xl text-center">
                   Development Software
                 </h1>
@@ -838,12 +955,26 @@ bg-[#11081F]
                         Postman
                       </h1>
                     </div>
+
+                    <div
+                      id="remix"
+                      className=" h-full w-[20vw]  lg:w-[20vw] flex flex-col justify-center items-center rounded-2xl"
+                    >
+                      <img
+                        className="dev w-[20vw] sm:w-[15vw] md:w-[12vw] lg:w-[10vw] xl:w-[7vw] 2xl:w-[6vw] h-auto rounded-2xl"
+                        src={`${remix}`}
+                        alt="remix"
+                      />
+                      <h1 className="text-[#000] rounded-md bg-[#FFFFFF] px-3 py-1 mt-2 text-center">
+                        Remix IDE
+                      </h1>
+                    </div>
                   </div>
                 </div>
               </div>
 
               {/* CyberSecurity Tools */}
-              <div className="bg-linear-to-tl to-[#ffffff35] border-2  border-[#ffffff30]   w-[90%] py-5 mt-10  rounded-2xl">
+              <div className="bg-linear-to-tl to-[#ffffff35] border-2  border-[#ffffff30]   w-[90%] py-5 mt-10  rounded-2xl backdrop-blur-2xl">
                 <h1 className="cyberSecurity text-black text-3xl sm:text-4xl text-center">
                   CyberSecurity Tools
                 </h1>
@@ -895,8 +1026,8 @@ bg-[#11081F]
               </div>
 
               {/* Hosting Platforms */}
-              <div className="bg-linear-to-b to-[#ffffff30] border-2  border-[#ffffff30]  w-[90%] py-5 mt-10 rounded-2xl">
-                <h1 className="text-white text-3xl sm:text-4xl text-center">
+              <div className="bg-linear-to-b to-[#ffffff30] border-2  border-[#ffffff30]  w-[90%] py-5 mt-10 rounded-2xl backdrop-blur-2xl">
+                <h1 className="text-white text-3xl sm:text-4xl text-center backdrop-blur-2xl">
                   Hosting Platforms
                 </h1>
                 <div className="w-full py-1   flex justify-center items-center ">
@@ -933,14 +1064,41 @@ bg-[#11081F]
               </div>
             </div>
         </div>
-            
-          </div>
+          
+      </div>
+
+      {/* horizontal projects */}
+      
 
           
 
           
         
     </div>
+
+    <div
+    id="scrollContainer"
+      className="w-[100vw] flex h-screen bg-black overflow-hidden   relative        "
+    >
+
+      {/* scroll container me overflow hidden he */}
+      <div
+        id="section"
+        className="w-[100vw] h-screen flex flex-col justify-center   items-center bg-pink-500 text-white"
+      >
+
+      <h1>First page</h1>
+    </div>
+
+    <div  id="section" className="bg-lime-500 w-[100vw] h-screen absolute top-0 left-[100vw]  flex flex-col   justify-center    items-center  text-white">
+      <h1>Second page</h1>
+    </div>
+
+    <div  id="section" className="bg-purple-500 w-[100vw] h-screen absolute top-0 left-[200vw]  flex flex-col justify-center   items-center  text-white ">
+      <h1>Thire page</h1>
+    </div>
+  </div>
+  </div>
   );
 }
 
