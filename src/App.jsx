@@ -197,7 +197,7 @@ function App() {
         stagger: 0.1,
         ease: "back.out",
       });
-     });
+     
 
      gsap.from(aboutME.chars, {
       opacity: 0,
@@ -522,6 +522,344 @@ function App() {
           scrub: 1,
         },
       });
+    });
+
+    // Tablet portrait (481px to 768px)
+    media.add("(min-width: 481px) and (max-width: 768px)", () => {
+      gsap.from(split.words, {
+        duration: .8,
+        opacity: 0,
+        y: 50,
+        stagger: 0.1,
+        ease: "back.out",
+      });
+     
+
+     gsap.from(aboutME.chars, {
+      opacity: 0,
+      y: -100,
+      x: 100,
+      stagger: 0.1,
+      ease: "back.out",
+      scrollTrigger: {
+        trigger: aboutME.chars,
+        markers: false,
+        start: "800% 100%",
+        end: "1000% 80%",
+        scrub: 1,
+      },
+    });
+
+    gsap.from(aboutPara.words, {
+      // duration: 1,
+      opacity: 0,
+      y: 70,
+      rotateZ:"50",
+      stagger: 0.1,
+      ease: "back.out",
+      // pin:true,
+      scrollTrigger: {
+        trigger: aboutPara.words,
+        markers: false,
+        start: "1200% 95%",
+        end: "1400% 75%",
+        scrub: 1.5,
+      },
+    });
+
+    gsap.from(s3Text.words, {
+      // duration: 1,
+      opacity: 0,
+      x: 500,
+      stagger: 0.1,
+      // ease: "back.out",
+      scrollTrigger: {
+        trigger: s3Text.words,
+        markers: false,
+        start: "0% 90%",
+        end: "400% 70%",
+        scrub: 1,
+      },
+    });
+
+    gsap.from(s3Para.chars, {
+      // duration: 1,
+      // opacity: 0,
+      scale:0,
+      y: 50,
+      stagger: 0.1,
+      // ease: "back.out",
+      scrollTrigger: {
+        trigger: s3Para.chars,
+        markers: false,
+        start: "0% 80%",
+        end: "200px 80%",
+        scrub: 1,
+      },
+    });
+
+    gsap.from(techStack.chars, {
+      // duration: 1,
+      scale: 0,
+      rotateZ: 200,
+      x: 100,
+      y: -100,
+      stagger: 0.1,
+      ease: "back.out",
+      scrollTrigger: {
+        trigger: techStack.chars,
+        markers: false,
+        start: "3300% 90%",
+        end: "3500% 70%",
+        scrub: 1,
+      },
+    });
+
+    gsap.from(".uiService",{
+      opacity:0,
+      scale:0,
+      stagger: 0.4,
+      // ease: "back.out",
+      scrollTrigger: {
+        trigger: ".uiService",
+        markers: false,
+        start: "0% 80%",
+        end: "100% 70%",
+        scrub: 1,
+      },
+    });
+
+    gsap.set(
+      [".frontend","blockchain", ".backend", ".os", ".dev", ".hosting", ".cybertools"],
+      {
+        scale: 1,
+        opacity: 1,
+        y: 0,
+        x: 0,
+        borderRadius: 10,
+      }
+    );
+
+    gsap.from(".frontend", {
+      // borderRadius: 50,
+      // scale: 0.1,
+      x: 500,
+      opacity: 0,
+      // ease: "back.out",
+      stagger: 0.1,
+      scrollTrigger: {
+        trigger: ".frontend",
+        start: "0px 100%",
+        end: "1000px 0%",
+        markers: false,
+        scrub: 1,
+      },
+    });
+
+    gsap.from(".backend", {
+      
+      x: -500,
+      opacity: 0,
+      ease: "back.inOut",
+      stagger: 0.1,
+      scrollTrigger: {
+        trigger: ".backend",
+        start: "0px 80%",
+        end: "400px 70%",
+        markers: false,
+        scrub: 1,
+      },
+    });
+
+    gsap.from(".blockchain", {
+      borderRadius: 100,
+      scale: 0.1,
+      // x: -1000,
+      // opacity: 0,
+      ease: "back.inOut",
+      stagger: 0.1,
+      scrollTrigger: {
+        trigger: ".blockchain",
+        start: "0px 80%",
+        end: "200px 65%",
+        markers: false,
+        scrub: 1,
+      },
+    });
+
+
+    gsap.from(".os", {
+      
+      rotateX:"100",
+      ease: "back.inOut",
+      stagger: 0.1,
+      scrollTrigger: {
+        trigger: ".os",
+        start: "0px 80%",
+        end: "100px 70%",
+        markers: false,
+        scrub: 1,
+      },
+    });
+
+    gsap.from(".dev", {
+      // borderRadius: 50,
+      // scale: 0.1,
+      // x: 1000,
+      y:50,
+      rotateZ:"100",
+      rotationZ:"100",
+      opacity: 0,
+      ease: "back.inOut",
+      stagger: 0.1,
+      scrollTrigger: {
+        trigger: ".dev",
+        start: "0px 80%",
+        end: "100px 70%",
+        markers: false,
+        scrub: 1,
+      },
+    });
+
+    gsap.to(".cyberSecurity", {
+      scrambleText: {
+        text: "Cyber-Security Tools",
+        chars: "▓▒░!@#$%^&*()_+=-{}[]|:;<>?,./",
+        revealDelay: 0.02,
+        speed: 10,
+      },
+      color: "white",
+      scrollTrigger: {
+        trigger: ".cyberSecurity",
+        start: "0px 100%",
+        end: "100px 60%",
+        markers: false,
+        scrub: 1,
+      },
+    });
+
+    gsap.from(".cybertools", {
+      borderRadius: 100,
+      scale: 0.01,
+      y: 80,
+      ease: "back.inOut",
+      stagger: 0.1,
+      scrollTrigger: {
+        trigger: ".cybertools",
+        start: "0px 80%",
+        end: "100px 70%",
+        markers: false,
+        scrub: 1,
+      },
+    });
+
+    gsap.from(".hosting", {
+      borderRadius: 50,
+      scale: 0.01,
+      // rotateZ:100,
+      skewY: 60,
+      y: 70,
+      opacity: 0,
+      ease: "back.inOut",
+      stagger: 0.1,
+      scrollTrigger: {
+        trigger: ".hosting",
+        start: "0px 80%",
+        end: "100px 70%",
+        markers: false,
+        scrub: 1,
+      },
+    });
+
+    gsap.set(".techText",{
+        x:0,y:0,opacity:1,scale:1
+      })
+      gsap.from(".techText",{
+        y:-50,
+        opacity:0,
+        // ease: "back.out",
+        stagger: 0.1,
+        scrollTrigger: {
+          trigger: ".techText",
+          start: "0px 80%",
+          end: "100px 56%",
+          markers: false,
+          scrub: .5,
+        },
+      })
+
+      gsap.from(project.chars, {
+        y: -200,
+        rotateZ: 100,
+        rotateX: 200,
+        rotateY: 200,
+        scale: 0,
+        stagger: 0.5,
+        ease: "back.out",
+        scrollTrigger: {
+          trigger: project.chars,
+          start: "0% 50%",
+          end: "100% 30%",
+          scrub: 1,
+          markers: false,
+        },
+      });
+
+      gsap.from(".projectsP1", {
+       opacity:0,
+        // scale: 0,
+        stagger: 0.1,
+        ease: "back.out",
+        scrollTrigger: {
+          trigger: ".projectsP1",
+          start: "0% 50%",
+          end: "100% 40%",
+          scrub: 1,
+          markers: false,
+        },
+      });
+
+      gsap.from(".projectsP2", {
+        opacity:0,
+         // scale: 0,
+         stagger: 0.1,
+         ease: "back.out",
+         scrollTrigger: {
+           trigger: ".projectsP2",
+           start: "800px 70%",
+           end: "800px 60%",
+           scrub: 1,
+           markers: false,
+         },
+       });
+
+       gsap.from(p3Text.words, {
+        y: 600,
+        scale: 0,
+        stagger: 0.5,
+        // ease: "back.out",
+        scrollTrigger: {
+          trigger: p3Text.words,
+          start: "600px 80%",
+          end: "700px 70%",
+          scrub: 1,
+          markers: false,
+        },
+      });
+
+      gsap.from(".card", {
+        rotateX:80,
+        ease: "back.out",
+        scrollTrigger: {
+          trigger: ".card",
+          start: "top 70%",
+          end: "bottom 60%",
+          markers: false,
+          scrub: 1,
+        },
+      });
+    });
+
 
 
 
