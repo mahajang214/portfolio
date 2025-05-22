@@ -163,14 +163,18 @@ function App() {
       type: "words,chars",
     });
 
-    
-
-    
-
-    
     const aboutPara = new SplitText(".aboutMePara", {
       type: "words,chars",
     });
+    const project = new SplitText(".project", {
+      type: "words,chars",
+    });
+
+    const p3Text = new SplitText(".p3Text", {
+      type: "words,chars",
+    });
+    
+
     gsap.to(sections, {
       xPercent: -100 * (sections.length - 1),
       ease: "none",
@@ -363,9 +367,12 @@ function App() {
     });
 
     gsap.from(".dev", {
-      borderRadius: 50,
-      scale: 0.1,
-      x: 1000,
+      // borderRadius: 50,
+      // scale: 0.1,
+      // x: 1000,
+      y:50,
+      rotateZ:"100",
+      rotationZ:"100",
       opacity: 0,
       ease: "back.inOut",
       stagger: 0.1,
@@ -373,10 +380,153 @@ function App() {
         trigger: ".dev",
         start: "0px 80%",
         end: "100px 70%",
-        markers: true,
+        markers: false,
         scrub: 1,
       },
     });
+
+    gsap.to(".cyberSecurity", {
+      scrambleText: {
+        text: "Cyber-Security Tools",
+        chars: "▓▒░!@#$%^&*()_+=-{}[]|:;<>?,./",
+        revealDelay: 0.02,
+        speed: 10,
+      },
+      color: "white",
+      scrollTrigger: {
+        trigger: ".cyberSecurity",
+        start: "0px 100%",
+        end: "100px 60%",
+        markers: false,
+        scrub: 1,
+      },
+    });
+
+    gsap.from(".cybertools", {
+      borderRadius: 100,
+      scale: 0.01,
+      y: 80,
+      ease: "back.inOut",
+      stagger: 0.1,
+      scrollTrigger: {
+        trigger: ".cybertools",
+        start: "0px 80%",
+        end: "100px 70%",
+        markers: false,
+        scrub: 1,
+      },
+    });
+
+    gsap.from(".hosting", {
+      borderRadius: 50,
+      scale: 0.01,
+      // rotateZ:100,
+      skewY: 60,
+      y: 70,
+      opacity: 0,
+      ease: "back.inOut",
+      stagger: 0.1,
+      scrollTrigger: {
+        trigger: ".hosting",
+        start: "0px 80%",
+        end: "100px 70%",
+        markers: false,
+        scrub: 1,
+      },
+    });
+
+    gsap.set(".techText",{
+        x:0,y:0,opacity:1,scale:1
+      })
+      gsap.from(".techText",{
+        y:-50,
+        opacity:0,
+        // ease: "back.out",
+        stagger: 0.1,
+        scrollTrigger: {
+          trigger: ".techText",
+          start: "0px 80%",
+          end: "100px 56%",
+          markers: false,
+          scrub: .5,
+        },
+      })
+
+      gsap.from(project.chars, {
+        y: -200,
+        rotateZ: 100,
+        rotateX: 200,
+        rotateY: 200,
+        scale: 0,
+        stagger: 0.5,
+        ease: "back.out",
+        scrollTrigger: {
+          trigger: project.chars,
+          start: "0% 50%",
+          end: "100% 30%",
+          scrub: 1,
+          markers: false,
+        },
+      });
+
+      gsap.from(".projectsP1", {
+       opacity:0,
+        // scale: 0,
+        stagger: 0.1,
+        ease: "back.out",
+        scrollTrigger: {
+          trigger: ".projectsP1",
+          start: "0% 50%",
+          end: "100% 40%",
+          scrub: 1,
+          markers: false,
+        },
+      });
+
+      gsap.from(".projectsP2", {
+        opacity:0,
+         // scale: 0,
+         stagger: 0.1,
+         ease: "back.out",
+         scrollTrigger: {
+           trigger: ".projectsP2",
+           start: "800% 60%",
+           end: "850% 60%",
+           scrub: 1,
+           markers: false,
+         },
+       });
+
+       gsap.from(p3Text.words, {
+        y: 600,
+        scale: 0,
+        stagger: 0.5,
+        // ease: "back.out",
+        scrollTrigger: {
+          trigger: p3Text.words,
+          start: "500px 100%",
+          end: "600px 90%",
+          scrub: 1,
+          markers: false,
+        },
+      });
+
+      gsap.from(".card", {
+        rotateX:80,
+        ease: "back.out",
+        scrollTrigger: {
+          trigger: ".card",
+          start: "top 70%",
+          end: "bottom 60%",
+          markers: false,
+          scrub: 1,
+        },
+      });
+
+
+
+
+
 
 
 
@@ -1482,9 +1632,9 @@ function App() {
           id="section"
           className="w-[100vw] h-screen flex justify-center   items-center  text-white flex-col "
         >
-          <h1 className="projects mb-[7vh] text-4xl z-10 ">Projects</h1>
+          <h1 className="project mb-[7vh] text-4xl z-10 ">Projects</h1>
 
-          <h1 className="text-2xl          text-white text-center z-10">
+          <h1 className="text-2xl projectsP1          text-white text-center z-10">
             Full Stack Chatting Website
           </h1>
           <div className="w-[90%]  py-2 grid grid-cols-1 relative backdrop-blur-3xl">
@@ -1495,7 +1645,7 @@ function App() {
               alt=""
             />
             {/* macbook code */}
-            <div className="w-full rounded-lg pt-2 pl-2 border-l-2 border-l-[#ffffff79] border-t-2 border-t-[#ffffff79] bg-linear-to-tl to-[#7127BA] to-60% from-[#fff]  overflow-hidden backdrop-blur-lg">
+            <div className="w-full projectsP1 rounded-lg pt-2 pl-2 border-l-2 border-l-[#ffffff79] border-t-2 border-t-[#ffffff79] bg-linear-to-tl to-[#7127BA] to-60% from-[#fff]  overflow-hidden backdrop-blur-lg">
               <img
                 className="backdrop-blur-2xl scale-[3] translate-x-[320px] translate-y-[210px]"
                 src={`${project1}`}
@@ -1571,7 +1721,7 @@ function App() {
               onClick={() => {
                 return setOpenFirstProject(!openFirstProject);
               }}
-              className="mt-4 px-10 py-2 bg-[#7127BA] border-2  border-[#ffffff82] text-white rounded-lg  cursor-pointer transition-all duration-300 font-medium backdrop-blur-2xl"
+              className="mt-4  px-10 py-2 bg-[#7127BA] border-2  border-[#ffffff82] text-white rounded-lg  cursor-pointer transition-all duration-300 font-medium backdrop-blur-2xl"
             >
               {" "}
               details
@@ -1583,7 +1733,7 @@ function App() {
           id="section"
           className="w-[100vw] h-screen flex justify-center   items-center  text-white flex-col  absolute top-0 left-[100vw]"
         >
-          <h1 className="text-2xl         backdrop-blur-4xl">
+          <h1 className="text-2xl  projectsP2         backdrop-blur-4xl">
             Full Stack Social Media Website
           </h1>
           <div
@@ -1591,9 +1741,9 @@ function App() {
               ${openSecondProject ? "w-[70%]" : "w-[90%]"}`}
           >
             {/* macbook code */}
-            <div className="w-full rounded-lg pt-2 pl-2 border-l-2 border-l-[#ffffff79] border-t-2 border-t-[#ffffff79] bg-linear-to-tl to-[#7127BA] to-60% from-[#fff]  overflow-hidden backdrop-blur-lg">
+            <div className="w-full rounded-lg pt-2 pl-2 border-l-2 border-l-[#ffffff79] border-t-2 projectsP2 border-t-[#ffffff79] bg-linear-to-tl to-[#7127BA] to-60% from-[#fff]  overflow-hidden backdrop-blur-lg">
               <img
-                className={`scale-[3]  ${
+                className={`scale-[3]   ${
                   openSecondProject
                     ? "translate-x-[250px] translate-y-[170px]"
                     : "translate-x-[320px] translate-y-[210px]"
@@ -1758,15 +1908,16 @@ function App() {
               alt=""
             />
 
-            <h1 className="projectPage3Text text-[60px] leading-13 z-10 text-gray-400 text-center">
-              Helping businesses{" "}
-              <span className="font-bold text-[#fff] ">increase revenue </span>{" "}
+            <h1 className=" p3Text text-[50px] leading-13 z-10 text-gray-400 text-center">
+              Helping businesses 
+              <span className="font-bold  text-[#fff] mx-1 ">increase revenue </span>{" "}
               through fast, secure{" "}
-              <span className="font-bold text-[#fff]">websites</span>.
+              <span className="font-bold text-[#fff] mx-1">websites</span>
             </h1>
           </div>
         </div>
       </div>
+      {/* Ready to build something that performs and sells? Let’s talk. */}
 
       {/* footer */}
       <div className="bg-linear-to-t from-[#7127BA] rounded-t-[20px] to-[#070E16]  pt-4 w-full ">
