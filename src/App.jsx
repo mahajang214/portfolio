@@ -22,6 +22,10 @@ import project2 from "./assets/project2.png";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
+import Loading from "./Loading";
+import { Toaster } from "react-hot-toast";
+import axios from "axios";
+import Notification from './Notification';
 
 // Register the plugin
 gsap.registerPlugin(ScrollTrigger);
@@ -29,10 +33,103 @@ gsap.registerPlugin(ScrollTrigger);
 function App() {
   const [isOpen, setIsOpen] = useState(false);
   const [openFirstProject, setOpenFirstProject] = useState(false);
-  const [openSecondProject, setOpenSecondProject] = useState(false)
+  const [openSecondProject, setOpenSecondProject] = useState(false);
+
+  <Toaster position="top-right" reverseOrder={false} />;
 
   const handleMenuClick = () => {
     setIsOpen(!isOpen);
+  };
+
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: "",
+    number: "",
+  });
+  const [msg, setMsg] = useState(null);
+  const [notification, setNotification] = useState(null);
+  const [isFeedbackLoading, setIsFeedbackLoading] = useState(false);
+  const [isMessageLoading, setIsMessageLoading] = useState(false);
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!formData.message) {
+      return setNotification({ type: "error", message: "Message is Empty." });
+    }
+    if (!formData.email) {
+      return setNotification({ type: "error", message: "Email is Empty." });
+    }
+    if (!formData.name) {
+      return setNotification({ type: "error", message: "Name is Empty." });
+    }
+    if (!formData.number) {
+      return setNotification({ type: "error", message: "Number is Empty." });
+    }
+    try {
+      setIsMessageLoading(true);
+      const sendMail = await axios.post(
+        `${import.meta.env.VITE_BASE_URL}/send-mail`,
+        formData
+      );
+      console.log(sendMail.data);
+      setIsMessageLoading(false);
+
+      return setNotification({
+        type: "success",
+        message: "Message sent successfully!",
+      });
+    } catch (error) {
+      setIsMessageLoading(false);
+      console.error(error.message);
+      return setNotification({
+        type: "error",
+        message: "Failed to send message.",
+      });
+    }
+    // const res = await fetch("http://localhost:5000/send-email", {
+    //   method: "POST",
+    //   headers: { "Content-Type": "application/json" },
+    //   body: JSON.stringify(formData),
+    // });
+
+    // const data = await res.json();
+    // alert(data.message);
+  };
+
+  const feedbackHandler = async (e) => {
+    e.preventDefault();
+    if (!msg) {
+      return setNotification({ type: "error", message: "Feedback is Empty." });
+    }
+    try {
+      setIsFeedbackLoading(true);
+      const sendFeedback = await axios.post(
+        `${import.meta.env.VITE_BASE_URL}/feedback`,
+        { message: msg }
+      );
+      console.log(sendFeedback.data);
+      setIsFeedbackLoading(false);
+
+      setNotification({
+        type: "success",
+        message: "Feedback sended successfully!",
+      });
+      setTimeout(() => {
+        setNotification({ type: "success", message: "Thanks for feedback" });
+      }, 4000);
+    } catch (error) {
+      setIsFeedbackLoading(false);
+      console.error(error.message);
+      return setNotification({
+        type: "error",
+        message: "Failed to send feedback.",
+      });
+    }
   };
 
   useGSAP(() => {
@@ -53,7 +150,7 @@ function App() {
   });
 
   return (
-    <div className="w-full   mt-0 mb-0  ">
+    <div className="w-full bg-[#11081F]  mt-0 mb-0  ">
       {/* is upar wali me bhi overflow hidden he */}
       <div className="w-full overflow-hidden py-0  ">
         {/* Navbar */}
@@ -871,6 +968,36 @@ bg-[#11081F]
                         Metamask
                       </h1>
                     </div>
+
+                    <div
+                      id="metamask"
+                      className=" h-full w-[20vw]  lg:w-[20vw] flex flex-col justify-center items-center rounded-2xl"
+                    >
+                      <img
+                        className="blockchain w-[20vw] sm:w-[15vw] md:w-[12vw] lg:w-[10vw] xl:w-[7vw] 2xl:w-[6vw] h-auto rounded-lg"
+                        src={`${chai}`}
+                        alt="chai"
+                      />
+
+                      <h1 className="bg-white rounded-md text-[#9C0000] px-3 py-1 mt-2">
+                        Chai
+                      </h1>
+                    </div>
+
+                    <div
+                      id="mocha"
+                      className=" h-full w-[20vw]  lg:w-[20vw] flex flex-col justify-center items-center rounded-2xl"
+                    >
+                      <img
+                        className="blockchain w-[20vw] sm:w-[15vw] md:w-[12vw] lg:w-[10vw] xl:w-[7vw] 2xl:w-[6vw] h-auto rounded-lg"
+                        src={`${mocha}`}
+                        alt="mocha"
+                      />
+
+                      <h1 className="bg-white rounded-md text-[#8D6748] px-3 py-1 mt-2">
+                        Mocha
+                      </h1>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -1110,10 +1237,11 @@ bg-[#11081F]
         {/* scroll container me overflow hidden he */}
         <div
           id="section"
-          className="w-[100vw] h-screen flex justify-center   items-center  text-white flex-col transition-all duration-200"
+          className="w-[100vw] h-screen flex justify-center   items-center  text-white flex-col "
         >
-          <h1 className="projects mb-[7vh] text-4xl ">Projects</h1>
-          <h1 className="text-2xl         backdrop-blur-4xl">
+          <h1 className="projects mb-[7vh] text-4xl z-10 ">Projects</h1>
+
+          <h1 className="text-2xl          text-white text-center z-10">
             Full Stack Chatting Website
           </h1>
           <div className="w-[90%]  py-2 grid grid-cols-1 relative backdrop-blur-3xl">
@@ -1132,205 +1260,359 @@ bg-[#11081F]
               />
             </div>
           </div>
-         
-            
+
           {/* project details */}
-        {openFirstProject ? (
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, ease: "easeOut" }}
-            className="w-[85vw] bg-[#262A32] px-4 py-1  md:w-[65vw] backdrop-blur-3xl text-[#ffffffcd] rounded-lg relative"
-          >
-            {/* close btn */}
-            <button
-              onClick={() => setOpenFirstProject(false)}
-              className="absolute top-2 right-2  cursor-pointer hover:text-gray-300 transition-colors text-red-500"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
-            <motion.h2 
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.2, duration: 0.4 }}
-              className="text-xl font-semibold mb-"
-            >
-              Specialities
-            </motion.h2>
-            <motion.ul 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.3, duration: 0.4 }}
-              className="list-disc pl-6 mb-2"
-            >
-              <li>Global Chat</li>
-              <li>Realtime Chat</li>
-            </motion.ul>
+          {openFirstProject ? (
             <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.4, duration: 0.4 }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, ease: "easeOut" }}
+              className="w-[85vw] bg-[#202429] px-4 py-1  md:w-[65vw] backdrop-blur-3xl text-[#ffffffcd] rounded-lg relative"
             >
-              <h3 className="font-semibold mb-2">Tech Used</h3>
-              <p className="mb-2">Frontend: Html, Css, Tailwindcss, GSAP, scrollTrigger, Reactjs, Zustand, Socket.io-client, React Router Dom, Axios, javascript.</p>
-              <p>Backend: Nodejs, Expressjs, MongoDB, Mongoose, Socket.io, RESTful API, Jsonwebtoken.</p>
+              {/* close btn */}
+              <button
+                onClick={() => setOpenFirstProject(false)}
+                className="absolute top-2 right-2  cursor-pointer hover:text-gray-300 transition-colors text-red-500"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </button>
+              <motion.h2
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.2, duration: 0.4 }}
+                className="text-xl font-semibold mb-"
+              >
+                Specialities
+              </motion.h2>
+              <motion.ul
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.3, duration: 0.4 }}
+                className="list-disc pl-6 mb-2"
+              >
+                <li>Global Chat</li>
+                <li>Realtime Chat</li>
+              </motion.ul>
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.4, duration: 0.4 }}
+              >
+                <h3 className="font-semibold mb-2">Tech Used</h3>
+                <p className="mb-2">
+                  Frontend: Html, Css, Tailwindcss, GSAP, scrollTrigger,
+                  Reactjs, Zustand, Socket.io-client, React Router Dom, Axios,
+                  javascript.
+                </p>
+                <p>
+                  Backend: Nodejs, Expressjs, MongoDB, Mongoose, Socket.io,
+                  RESTful API, Jsonwebtoken.
+                </p>
+              </motion.div>
             </motion.div>
-          </motion.div>
-        ): 
-        <button 
-        onClick={()=>{
-          return setOpenFirstProject(!openFirstProject);
-        }} 
-        className="mt-4 px-10 py-2 bg-[#7127BA] border-2  border-[#ffffff82] text-white rounded-lg  cursor-pointer transition-all duration-300 font-medium backdrop-blur-2xl"
-              > details
-         </button>}
+          ) : (
+            <button
+              onClick={() => {
+                return setOpenFirstProject(!openFirstProject);
+              }}
+              className="mt-4 px-10 py-2 bg-[#7127BA] border-2  border-[#ffffff82] text-white rounded-lg  cursor-pointer transition-all duration-300 font-medium backdrop-blur-2xl"
+            >
+              {" "}
+              details
+            </button>
+          )}
         </div>
 
         <div
           id="section"
-         className="w-[100vw] h-screen flex justify-center   items-center  text-white flex-col transition-all duration-200 absolute top-0 left-[100vw]"
+          className="w-[100vw] h-screen flex justify-center   items-center  text-white flex-col  absolute top-0 left-[100vw]"
         >
-            <h1 className="text-2xl         backdrop-blur-4xl">
+          <h1 className="text-2xl         backdrop-blur-4xl">
             Full Stack Social Media Website
           </h1>
           <div
             className={`py-2 grid grid-cols-1 relative
-              ${openSecondProject ? 'w-[70%]' : 'w-[90%]'}`}
+              ${openSecondProject ? "w-[70%]" : "w-[90%]"}`}
           >
-           
             {/* macbook code */}
             <div className="w-full rounded-lg pt-2 pl-2 border-l-2 border-l-[#ffffff79] border-t-2 border-t-[#ffffff79] bg-linear-to-tl to-[#7127BA] to-60% from-[#fff]  overflow-hidden backdrop-blur-lg">
               <img
-                className="scale-[3] translate-x-[320px] translate-y-[210px]"
+                className={`scale-[3]  ${
+                  openSecondProject
+                    ? "translate-x-[250px] translate-y-[170px]"
+                    : "translate-x-[320px] translate-y-[210px]"
+                } `}
                 src={`${project2}`}
                 alt=""
               />
             </div>
           </div>
-         
-            
+
           {/* project details */}
-        {openSecondProject ? (
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, ease: "easeOut" }}
-            className="w-[85vw] bg-[#262A32] px-4 py-1  md:w-[65vw] backdrop-blur-3xl text-[#ffffffcd] rounded-lg relative"
-          >
-            {/* close btn */}
-            <button
-              onClick={() => setOpenSecondProject(!openSecondProject)}
-              className="absolute top-2 right-2  cursor-pointer hover:text-gray-300 transition-colors text-red-500"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
+          {openSecondProject ? (
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className="space-y-4"
+              transition={{ duration: 0.5, ease: "easeOut" }}
+              className="w-[85vw] mb-1 bg-[#464547] px-4 py-1  md:w-[65vw] backdrop-blur-3xl text-[#ffffffcd] text-[14px] rounded-lg relative"
             >
-              <motion.h2 
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.2, duration: 0.4 }}
-                className="text-xl font-semibold mb-4"
+              {/* close btn */}
+              <button
+                onClick={() => {
+                  return setOpenSecondProject(!openSecondProject);
+                }}
+                className="absolute top-2 right-6  cursor-pointer bg-transparent rounded p-2 hover:text-gray-300 transition-colors text-red-500"
               >
-                Features
-              </motion.h2>
-              
-              <motion.ul
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.4, duration: 0.4 }}
-                className="list-decimal pl-6 space-y-2"
-              >
-                <motion.li
-                  initial={{ opacity: 0, x: -10 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.5 }}
-                >JWT authentication and authorization</motion.li>
-                <motion.li
-                  initial={{ opacity: 0, x: -10 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.6 }}
-                >Profile management</motion.li>
-                <motion.li
-                  initial={{ opacity: 0, x: -10 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.7 }}
-                >Post creation and interaction (like, comment, share)</motion.li>
-                <motion.li
-                  initial={{ opacity: 0, x: -10 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.8 }}
-                >Real-time interactions</motion.li>
-                <motion.li
-                  initial={{ opacity: 0, x: -10 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.9 }}
-                >Explore and search functionality</motion.li>
-                <motion.li
-                  initial={{ opacity: 0, x: -10 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 1.0 }}
-                >1-on-1 Chat</motion.li>
-              </motion.ul>
-
-              <motion.h2
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 1.2, duration: 0.4 }}
-                className="text-xl font-semibold mt-6 mb-4"
-              >
-                Tech Used
-              </motion.h2>
-
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </button>
               <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 1.4, duration: 0.4 }}
-                className="space-y-2"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+                className="space-y-4"
               >
-                <motion.p
-                  initial={{ opacity: 0, x: -10 }}
+                <motion.h2
+                  initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 1.5 }}
+                  transition={{ delay: 0.2, duration: 0.4 }}
+                  className="text-xl font-semibold "
                 >
-                  Frontend: Html, Css, Tailwindcss, GSAP, Framer Motion, scrollTrigger, Reactjs, Zustand, Socket.io-client, React Router Dom, Axios, javascript.
-                </motion.p>
-                <motion.p
-                  initial={{ opacity: 0, x: -10 }}
+                  Features
+                </motion.h2>
+
+                <motion.ul
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.4, duration: 0.4 }}
+                  className="list-decimal pl-6 space-y-2"
+                >
+                  <motion.li
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.5 }}
+                  >
+                    JWT authentication and authorization
+                  </motion.li>
+                  <motion.li
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.6 }}
+                  >
+                    Profile management
+                  </motion.li>
+                  <motion.li
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.7 }}
+                  >
+                    Post creation and interaction (like, comment, share)
+                  </motion.li>
+                  <motion.li
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.8 }}
+                  >
+                    Real-time interactions
+                  </motion.li>
+                  <motion.li
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.9 }}
+                  >
+                    Explore and search functionality
+                  </motion.li>
+                  <motion.li
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 1.0 }}
+                  >
+                    1-on-1 Chat
+                  </motion.li>
+                </motion.ul>
+
+                <motion.h2
+                  initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 1.6 }}
+                  transition={{ delay: 1.2, duration: 0.4 }}
+                  className="text-xl font-semibold mt-2 mb-2"
                 >
-                  Backend: Nodejs, Expressjs, MongoDB, Mongoose, Socket.io, RESTful API, Jsonwebtoken, Multer.
-                </motion.p>
+                  Tech Used
+                </motion.h2>
+
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 1.4, duration: 0.4 }}
+                  className="space-y-2"
+                >
+                  <motion.p
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 1.5 }}
+                  >
+                    Frontend: Html, Css, Tailwindcss, GSAP, Framer Motion,
+                    scrollTrigger, Reactjs, Zustand, Socket.io-client, React
+                    Router Dom, Axios, javascript.
+                  </motion.p>
+                  <motion.p
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 1.6 }}
+                  >
+                    Backend: Nodejs, Expressjs, MongoDB, Mongoose, Socket.io,
+                    RESTful API, Jsonwebtoken, Multer.
+                  </motion.p>
+                </motion.div>
               </motion.div>
             </motion.div>
-            
-          </motion.div>
-        ): 
-        <button 
-        onClick={()=>{
-          return setOpenSecondProject(!openSecondProject);
-        }} 
-        className="mt-4 px-10 py-2 bg-[#7127BA] border-2  border-[#ffffff82] text-white rounded-lg  cursor-pointer transition-all duration-300 font-medium backdrop-blur-2xl"
-              > details
-         </button>}
+          ) : (
+            <button
+              onClick={() => {
+                return setOpenSecondProject(!openSecondProject);
+              }}
+              className="mt-4 px-10 py-2 bg-[#7127BA] border-2  border-[#ffffff82] text-white rounded-lg  cursor-pointer transition-all duration-300 font-medium backdrop-blur-2xl"
+            >
+              {" "}
+              details
+            </button>
+          )}
         </div>
 
-         <div
+        <div
           id="section"
-         className="w-[100vw] h-screen flex justify-center   items-center  text-white flex-col transition-all duration-200 absolute top-0 left-[200vw]"
-        ></div>
+          className="w-[100vw] h-screen flex justify-center   items-center  text-white flex-col  absolute top-0 left-[200vw]"
+        >
+          <div className="w-[85vw] md:w-[65vw] relative">
+            <img
+              className="absolute top-0 left-0 -z-10 scale-[1.5] "
+              src={`${gradient}`}
+              alt=""
+            />
 
-      
-    
+            <h1 className="projectPage3Text text-[60px] leading-13 z-10 text-gray-400 text-center">
+              Helping businesses{" "}
+              <span className="font-bold text-[#fff] ">increase revenue </span>{" "}
+              through fast, secure{" "}
+              <span className="font-bold text-[#fff]">websites</span>.
+            </h1>
+          </div>
+        </div>
+      </div>
+
+      {/* footer */}
+      <div className="bg-linear-to-t from-[#7127BA] rounded-t-[20px] to-[#070E16]  pt-4 w-full ">
+        {/* Cards  */}
+        <div className="w-full flex justify-center items-center  rounded-2xl flex-col">
+          {isMessageLoading ? (
+            <Loading />
+          ) : (
+            <div className="w-[85vw] md:w-[65vw] card py-5 bg-[#ffffff1b] px-4  rounded-2xl">
+              <h1 className="  text-center text-3xl sm:text-[45px] md:text-[60px] lg:text-[90px]  text-[#fff] font-normal">
+                Connect with ME
+              </h1>
+              <form action="" onSubmit={handleSubmit} method="post">
+                <input
+                  className="bg-white mt-4 px-6 py-2 w-full rounded-md text-2xl outline-none"
+                  type="text"
+                  placeholder="Name"
+                  name="name"
+                  onChange={handleChange}
+                />
+                <input
+                  className="bg-white px-6 py-2 w-full rounded-md text-2xl outline-none mt-4"
+                  type="email"
+                  placeholder="Email"
+                  name="email"
+                  onChange={handleChange}
+                />
+
+                <input
+                  className="bg-white px-6 py-2 w-full rounded-md text-shadow-md md:text-2xl outline-none mt-4"
+                  type="text"
+                  placeholder="Contact Number"
+                  name="number"
+                  onChange={handleChange}
+                />
+
+                <textarea
+                  id="helpMessage"
+                  name="message"
+                  rows="5"
+                  onChange={handleChange}
+                  className=" outline-none w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none mt-4 bg-white"
+                  placeholder="How can i help you?"
+                ></textarea>
+                <button className="w-full bg-[#4ED7F1] rounded-full mt-4 text-white font-bold text-xl cursor-pointer lg:text-4xl py-2 hover:rounded-md transition-all hover:scale-95 hover:duration-300">
+                  Send
+                </button>
+              </form>
+            </div>
+          )}
+
+          {/* Feedback Card */}
+          {isFeedbackLoading ? (
+            <Loading />
+          ) : (
+            <div className="w-[85vw] md:w-[65vw] rounded-2xl mt-2 flex ">
+              <input
+                className="bg-white  w-full rounded-l-xl outline-none px-2 md:px-6 py-2 text-md md:text-2xl"
+                type="text"
+                placeholder="Feedback"
+                onChange={(e) => setMsg(e.target.value)}
+              />
+              <button
+                onClick={feedbackHandler}
+                className="px-5  outline-none duration-200 hover:rounded-2xl rounded-r-xl bg-[#4ED7F1] text-white font-bold text-2xl cursor-pointer"
+              >
+                Send
+              </button>
+            </div>
+          )}
+        </div>
+
+        {notification && (
+          <Notification
+            type={notification.type}
+            message={notification.message}
+            onClose={() => setNotification(null)}
+          />
+        )}
+        <div className="w-full px-[2vw] flex translate-y-[2vh] sm:translate-y-[4.8vh] md:translate-y-[7.8vh] justify-center flex-col  items-center">
+          <h1 className="text-[6vh] sm:text-[12vh] md:text-[15vh] lg:text-[20vh] font-bold">
+            MAHAJAN
+          </h1>
+        </div>
+        <div className="bg-black py-4 w-full rounded-t-[30px] md:rounded-t-[50px] flex justify-center items-center text-xl text-[#4ED7F1]">
+          <h2 className="text-sm  text-center">
+            ©2025 Gaurav Mahajan.All rights reserved.
+          </h2>
+        </div>
       </div>
     </div>
   );
