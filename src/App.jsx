@@ -1184,7 +1184,7 @@ function App() {
            start: window.innerWidth > 1024 ? "2000px 90%" : "1600px 90%",
           end: window.innerWidth > 1024 ? "2100px 90%" : "1700px 90%",
            scrub: 1,
-           markers: true,
+           markers: false,
          },
        });
 
