@@ -6,6 +6,8 @@ import elipse21 from "./assets/Ellipse 21.png";
 import elipse22 from "./assets/Ellipse 22.png";
 import elipse23 from "./assets/Ellipse 23.png";
 
+
+
 import soldity from "./assets/solidity.png";
 import hardhat from "./assets/hardhat.png";
 import alchemy from "./assets/alchemy.png";
@@ -29,6 +31,8 @@ import Notification from "./Notification";
 
 import { SplitText } from "gsap/SplitText";
 import { ScrambleTextPlugin } from "gsap/ScrambleTextPlugin";
+
+
 
 import clickPic from "./assets/click.png";
 
@@ -1308,6 +1312,17 @@ function App() {
   const horizontalComponent = useRef(null);
   // ID: horizontalSections;
 
+  const handleDownload = () => {
+    const link = document.createElement('a');
+    link.href = '/resume.pdf'; // Using absolute path from public folder
+    link.download = 'Gaurav_Resume.pdf';
+    document.body.appendChild(link); // Append to DOM
+    link.click();
+    document.body.removeChild(link); // Clean up
+    
+  };
+
+
   return (
     <div className="w-full bg-[#11081F]  mt-0 mb-0  ">
       {/* is upar wali me bhi overflow hidden he */}
@@ -1328,18 +1343,22 @@ function App() {
               />
             </div>
             <ul className="hidden sm:flex  gap-8 text-white">
-              <li className="hover:text-[#2FC0F5] transaal cursor-pointer transition-all duration-200 border-b-2 border-transparent  hover:border-[#2FC0F5]  ">
+              <li onClick={()=>window.location.reload()} className="hover:text-[#2FC0F5] transaal cursor-pointer transition-all duration-200 border-b-2 border-transparent  hover:border-[#2FC0F5]  ">
                 Home
               </li>
-              <li  onClick={()=>{
-
+              <li onClick={() => {
+                window.open('https://github.com/mahajang214', '_blank');
               }} className="hover:text-[#2FC0F5] transaal cursor-pointer transition-all duration-200 border-b-2 border-transparent  hover:border-[#2FC0F5]  ">
                 GitHub
               </li>
-              <li className="hover:text-[#2FC0F5] transaal cursor-pointer transition-all duration-200 border-b-2 border-transparent  hover:border-[#2FC0F5]  ">
+              <li onClick={handleDownload} className="hover:text-[#2FC0F5] transaal cursor-pointer transition-all duration-200 border-b-2 border-transparent  hover:border-[#2FC0F5]  ">
                 Resume
               </li>
-              <li className="hover:text-[#2FC0F5] transaal cursor-pointer transition-all duration-200 border-b-2 border-transparent  hover:border-[#2FC0F5]  ">
+              <li onClick={()=> setNotification({
+                  type: "success",
+                  message: "Contact information is available at the bottom of the website"
+                })
+              } className="hover:text-[#2FC0F5] transaal cursor-pointer transition-all duration-200 border-b-2 border-transparent  hover:border-[#2FC0F5]  ">
                 Contact ME
               </li>
             </ul>
@@ -1438,6 +1457,21 @@ function App() {
                         transition: { duration: 0.2 },
                       }}
                       whileTap={{ scale: 0.98 }}
+                      onClick={() => {
+                        if(item==="Github"){
+                          return window.open('https://github.com/mahajang214', '_blank');
+                        }else if(item==="Resume"){
+                          handleDownload();
+                        }
+                        else if(item==="Contact ME"){
+                        setNotification({
+                          type: "success",
+                          message: "Contact information is available at the bottom of the website"
+                        });
+                        }
+
+                        window.location.reload();
+                      }}
                       className="cursor-pointer text-lg font-medium hover:text-[#8a8af0] transition-colors duration-300 text-white"
                     >
                       {item}
