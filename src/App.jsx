@@ -1314,7 +1314,7 @@ function App() {
 
   const handleDownload = () => {
     const link = document.createElement('a');
-    link.href = '/resume.pdf'; // Using absolute path from public folder
+    link.href = `https://mahajang214.github.io/portfolio/resume.pdf`; // Using absolute path from public folder
     link.download = 'Gaurav_Resume.pdf';
     document.body.appendChild(link); // Append to DOM
     link.click();
