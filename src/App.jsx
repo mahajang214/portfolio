@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import logo from "/home/gaurav/Downloads/myPortfolioLogo.jpg";
+import React, { useRef, useState } from "react";
+import logo from "./assets/myPortfolioLogo.jpg";
 import { motion } from "motion/react";
 import gradient from "./assets/Gradient.png";
 import elipse21 from "./assets/Ellipse 21.png";
@@ -25,18 +25,17 @@ import { useGSAP } from "@gsap/react";
 import Loading from "./Loading";
 import { Toaster } from "react-hot-toast";
 import axios from "axios";
-import Notification from './Notification';
+import Notification from "./Notification";
 
 import { SplitText } from "gsap/SplitText";
 import { ScrambleTextPlugin } from "gsap/ScrambleTextPlugin";
 
-import clickPic from './assets/click.png';
+import clickPic from "./assets/click.png";
 
 // Register the plugin
 gsap.registerPlugin(ScrollTrigger);
 gsap.registerPlugin(SplitText);
 gsap.registerPlugin(ScrambleTextPlugin);
-
 
 function App() {
   const [isOpen, setIsOpen] = useState(false);
@@ -174,7 +173,6 @@ function App() {
     const p3Text = new SplitText(".p3Text", {
       type: "words,chars",
     });
-    
 
     gsap.to(sections, {
       xPercent: -100 * (sections.length - 1),
@@ -189,259 +187,266 @@ function App() {
       },
     });
 
-     // Mobile animation
-     media.add("(max-width: 480px)", () => {
+    // Mobile animation
+    media.add("(max-width: 480px)", () => {
       gsap.from(split.words, {
-        duration: .8,
+        duration: 0.8,
         opacity: 0,
         y: 50,
         stagger: 0.1,
         ease: "back.out",
       });
-     
 
-     gsap.from(aboutME.chars, {
-      opacity: 0,
-      y: -100,
-      x: 100,
-      stagger: 0.1,
-      ease: "back.out",
-      scrollTrigger: {
-        trigger: aboutME.chars,
-        markers: false,
-        start: "800% 100%",
-        end: "1000% 80%",
-        scrub: 1,
-      },
-    });
+      gsap.from(aboutME.chars, {
+        opacity: 0,
+        y: -100,
+        x: 100,
+        stagger: 0.1,
+        ease: "back.out",
+        scrollTrigger: {
+          trigger: aboutME.chars,
+          markers: false,
+          start: "800% 100%",
+          end: "1000% 80%",
+          scrub: 1,
+        },
+      });
 
-    gsap.from(aboutPara.words, {
-      // duration: 1,
-      opacity: 0,
-      y: 70,
-      rotateZ:"50",
-      stagger: 0.1,
-      ease: "back.out",
-      // pin:true,
-      scrollTrigger: {
-        trigger: aboutPara.words,
-        markers: false,
-        start: "1200% 95%",
-        end: "1400% 75%",
-        scrub: 1.5,
-      },
-    });
+      gsap.from(aboutPara.words, {
+        // duration: 1,
+        opacity: 0,
+        y: 70,
+        rotateZ: "50",
+        stagger: 0.1,
+        ease: "back.out",
+        // pin:true,
+        scrollTrigger: {
+          trigger: aboutPara.words,
+          markers: false,
+          start: "1200% 95%",
+          end: "1400% 75%",
+          scrub: 1.5,
+        },
+      });
 
-    gsap.from(s3Text.words, {
-      // duration: 1,
-      opacity: 0,
-      x: 500,
-      stagger: 0.1,
-      // ease: "back.out",
-      scrollTrigger: {
-        trigger: s3Text.words,
-        markers: false,
-        start: "0% 90%",
-        end: "400% 70%",
-        scrub: 1,
-      },
-    });
+      gsap.from(s3Text.words, {
+        // duration: 1,
+        opacity: 0,
+        x: 500,
+        stagger: 0.1,
+        // ease: "back.out",
+        scrollTrigger: {
+          trigger: s3Text.words,
+          markers: false,
+          start: "0% 90%",
+          end: "400% 70%",
+          scrub: 1,
+        },
+      });
 
-    gsap.from(s3Para.chars, {
-      // duration: 1,
-      // opacity: 0,
-      scale:0,
-      y: 50,
-      stagger: 0.1,
-      // ease: "back.out",
-      scrollTrigger: {
-        trigger: s3Para.chars,
-        markers: false,
-        start: "0% 90%",
-        end: "400% 70%",
-        scrub: 1,
-      },
-    });
+      gsap.from(s3Para.chars, {
+        // duration: 1,
+        // opacity: 0,
+        scale: 0,
+        y: 50,
+        stagger: 0.1,
+        // ease: "back.out",
+        scrollTrigger: {
+          trigger: s3Para.chars,
+          markers: false,
+          start: "0% 90%",
+          end: "400% 70%",
+          scrub: 1,
+        },
+      });
 
-    gsap.from(techStack.chars, {
-      // duration: 1,
-      scale: 0,
-      rotateZ: 200,
-      x: 100,
-      y: -100,
-      stagger: 0.1,
-      ease: "back.out",
-      scrollTrigger: {
-        trigger: techStack.chars,
-        markers: false,
-        start: "3300% 90%",
-        end: "3500% 70%",
-        scrub: 1,
-      },
-    });
+      gsap.from(techStack.chars, {
+        // duration: 1,
+        scale: 0,
+        rotateZ: 200,
+        x: 100,
+        y: -100,
+        stagger: 0.1,
+        ease: "back.out",
+        scrollTrigger: {
+          trigger: techStack.chars,
+          markers: false,
+          start: "3300% 90%",
+          end: "3500% 70%",
+          scrub: 1,
+        },
+      });
 
-    gsap.from(".uiService",{
-      opacity:0,
-      scale:0,
-      stagger: 0.4,
-      // ease: "back.out",
-      scrollTrigger: {
-        trigger: ".uiService",
-        markers: false,
-        start: "0% 80%",
-        end: "100% 70%",
-        scrub: 1,
-      },
-    });
+      gsap.from(".uiService", {
+        opacity: 0,
+        scale: 0,
+        stagger: 0.4,
+        // ease: "back.out",
+        scrollTrigger: {
+          trigger: ".uiService",
+          markers: false,
+          start: "0% 80%",
+          end: "100% 70%",
+          scrub: 1,
+        },
+      });
 
-    gsap.set(
-      [".frontend","blockchain", ".backend", ".os", ".dev", ".hosting", ".cybertools"],
-      {
-        scale: 1,
-        opacity: 1,
-        y: 0,
+      gsap.set(
+        [
+          ".frontend",
+          "blockchain",
+          ".backend",
+          ".os",
+          ".dev",
+          ".hosting",
+          ".cybertools",
+        ],
+        {
+          scale: 1,
+          opacity: 1,
+          y: 0,
+          x: 0,
+          borderRadius: 10,
+        }
+      );
+
+      gsap.from(".frontend", {
+        // borderRadius: 50,
+        // scale: 0.1,
+        x: 500,
+        opacity: 0,
+        // ease: "back.out",
+        stagger: 0.1,
+        scrollTrigger: {
+          trigger: ".frontend",
+          start: "0px 100%",
+          end: "1000px 0%",
+          markers: false,
+          scrub: 1,
+        },
+      });
+
+      gsap.from(".backend", {
+        x: -500,
+        opacity: 0,
+        ease: "back.inOut",
+        stagger: 0.1,
+        scrollTrigger: {
+          trigger: ".backend",
+          start: "0px 80%",
+          end: "400px 70%",
+          markers: false,
+          scrub: 1,
+        },
+      });
+
+      gsap.from(".blockchain", {
+        borderRadius: 100,
+        scale: 0.1,
+        // x: -1000,
+        // opacity: 0,
+        ease: "back.inOut",
+        stagger: 0.1,
+        scrollTrigger: {
+          trigger: ".blockchain",
+          start: "0px 80%",
+          end: "200px 65%",
+          markers: false,
+          scrub: 1,
+        },
+      });
+
+      gsap.from(".os", {
+        rotateX: "100",
+        ease: "back.inOut",
+        stagger: 0.1,
+        scrollTrigger: {
+          trigger: ".os",
+          start: "0px 80%",
+          end: "100px 70%",
+          markers: false,
+          scrub: 1,
+        },
+      });
+
+      gsap.from(".dev", {
+        // borderRadius: 50,
+        // scale: 0.1,
+        // x: 1000,
+        y: 50,
+        rotateZ: "100",
+        rotationZ: "100",
+        opacity: 0,
+        ease: "back.inOut",
+        stagger: 0.1,
+        scrollTrigger: {
+          trigger: ".dev",
+          start: "0px 80%",
+          end: "100px 70%",
+          markers: false,
+          scrub: 1,
+        },
+      });
+
+      gsap.to(".cyberSecurity", {
+        scrambleText: {
+          text: "Cyber-Security Tools",
+          chars: "▓▒░!@#$%^&*()_+=-{}[]|:;<>?,./",
+          revealDelay: 0.02,
+          speed: 10,
+        },
+        color: "white",
+        scrollTrigger: {
+          trigger: ".cyberSecurity",
+          start: "0px 100%",
+          end: "100px 60%",
+          markers: false,
+          scrub: 1,
+        },
+      });
+
+      gsap.from(".cybertools", {
+        borderRadius: 100,
+        scale: 0.01,
+        y: 80,
+        ease: "back.inOut",
+        stagger: 0.1,
+        scrollTrigger: {
+          trigger: ".cybertools",
+          start: "0px 80%",
+          end: "100px 70%",
+          markers: false,
+          scrub: 1,
+        },
+      });
+
+      gsap.from(".hosting", {
+        borderRadius: 50,
+        scale: 0.01,
+        // rotateZ:100,
+        skewY: 60,
+        y: 70,
+        opacity: 0,
+        ease: "back.inOut",
+        stagger: 0.1,
+        scrollTrigger: {
+          trigger: ".hosting",
+          start: "0px 80%",
+          end: "100px 70%",
+          markers: false,
+          scrub: 1,
+        },
+      });
+
+      gsap.set(".techText", {
         x: 0,
-        borderRadius: 10,
-      }
-    );
-
-    gsap.from(".frontend", {
-      // borderRadius: 50,
-      // scale: 0.1,
-      x: 500,
-      opacity: 0,
-      // ease: "back.out",
-      stagger: 0.1,
-      scrollTrigger: {
-        trigger: ".frontend",
-        start: "0px 100%",
-        end: "1000px 0%",
-        markers: false,
-        scrub: 1,
-      },
-    });
-
-    gsap.from(".backend", {
-      
-      x: -500,
-      opacity: 0,
-      ease: "back.inOut",
-      stagger: 0.1,
-      scrollTrigger: {
-        trigger: ".backend",
-        start: "0px 80%",
-        end: "400px 70%",
-        markers: false,
-        scrub: 1,
-      },
-    });
-
-    gsap.from(".blockchain", {
-      borderRadius: 100,
-      scale: 0.1,
-      // x: -1000,
-      // opacity: 0,
-      ease: "back.inOut",
-      stagger: 0.1,
-      scrollTrigger: {
-        trigger: ".blockchain",
-        start: "0px 80%",
-        end: "200px 65%",
-        markers: false,
-        scrub: 1,
-      },
-    });
-
-
-    gsap.from(".os", {
-      
-      rotateX:"100",
-      ease: "back.inOut",
-      stagger: 0.1,
-      scrollTrigger: {
-        trigger: ".os",
-        start: "0px 80%",
-        end: "100px 70%",
-        markers: false,
-        scrub: 1,
-      },
-    });
-
-    gsap.from(".dev", {
-      // borderRadius: 50,
-      // scale: 0.1,
-      // x: 1000,
-      y:50,
-      rotateZ:"100",
-      rotationZ:"100",
-      opacity: 0,
-      ease: "back.inOut",
-      stagger: 0.1,
-      scrollTrigger: {
-        trigger: ".dev",
-        start: "0px 80%",
-        end: "100px 70%",
-        markers: false,
-        scrub: 1,
-      },
-    });
-
-    gsap.to(".cyberSecurity", {
-      scrambleText: {
-        text: "Cyber-Security Tools",
-        chars: "▓▒░!@#$%^&*()_+=-{}[]|:;<>?,./",
-        revealDelay: 0.02,
-        speed: 10,
-      },
-      color: "white",
-      scrollTrigger: {
-        trigger: ".cyberSecurity",
-        start: "0px 100%",
-        end: "100px 60%",
-        markers: false,
-        scrub: 1,
-      },
-    });
-
-    gsap.from(".cybertools", {
-      borderRadius: 100,
-      scale: 0.01,
-      y: 80,
-      ease: "back.inOut",
-      stagger: 0.1,
-      scrollTrigger: {
-        trigger: ".cybertools",
-        start: "0px 80%",
-        end: "100px 70%",
-        markers: false,
-        scrub: 1,
-      },
-    });
-
-    gsap.from(".hosting", {
-      borderRadius: 50,
-      scale: 0.01,
-      // rotateZ:100,
-      skewY: 60,
-      y: 70,
-      opacity: 0,
-      ease: "back.inOut",
-      stagger: 0.1,
-      scrollTrigger: {
-        trigger: ".hosting",
-        start: "0px 80%",
-        end: "100px 70%",
-        markers: false,
-        scrub: 1,
-      },
-    });
-
-    gsap.set(".techText",{
-        x:0,y:0,opacity:1,scale:1
-      })
-      gsap.from(".techText",{
-        y:-50,
-        opacity:0,
+        y: 0,
+        opacity: 1,
+        scale: 1,
+      });
+      gsap.from(".techText", {
+        y: -50,
+        opacity: 0,
         // ease: "back.out",
         stagger: 0.1,
         scrollTrigger: {
@@ -449,9 +454,9 @@ function App() {
           start: "0px 80%",
           end: "100px 56%",
           markers: false,
-          scrub: .5,
+          scrub: 0.5,
         },
-      })
+      });
 
       gsap.from(project.chars, {
         y: -200,
@@ -471,7 +476,7 @@ function App() {
       });
 
       gsap.from(".projectsP1", {
-       opacity:0,
+        opacity: 0,
         // scale: 0,
         stagger: 0.1,
         ease: "back.out",
@@ -485,35 +490,22 @@ function App() {
       });
 
       gsap.from(".projectsP2", {
-        opacity:0,
-         // scale: 0,
-         stagger: 0.1,
-         ease: "back.out",
-         scrollTrigger: {
-           trigger: ".projectsP2",
-           start: "800% 60%",
-           end: "850% 60%",
-           scrub: 1,
-           markers: false,
-         },
-       });
-
-       gsap.from(p3Text.words, {
-        y: 600,
-        scale: 0,
-        stagger: 0.5,
-        // ease: "back.out",
+        opacity: 0,
+        // scale: 0,
+        stagger: 0.1,
+        ease: "back.out",
         scrollTrigger: {
-          trigger: p3Text.words,
-          start: "500px 100%",
-          end: "600px 90%",
+          trigger: ".projectsP2",
+          start: "800% 60%",
+          end: "850% 60%",
           scrub: 1,
           markers: false,
         },
       });
 
+      
       gsap.from(".card", {
-        rotateX:80,
+        rotateX: 80,
         ease: "back.out",
         scrollTrigger: {
           trigger: ".card",
@@ -521,6 +513,37 @@ function App() {
           end: "bottom 60%",
           markers: false,
           scrub: 1,
+        },
+      });
+
+      gsap.from(p3Text.words, {
+        y: 600,
+        scale: 0,
+        stagger: 0.1,
+        // ease: "back.out",
+        scrollTrigger: {
+          trigger: p3Text.words,
+          start: window.innerWidth > 1024 ? "3800px 90%" : "3800px 90%",
+          end: window.innerWidth > 1024 ? "3900px 90%" : "3900px 90%",
+          scrub: 1,
+          markers: false,
+        },
+      });
+      
+      const container = document.querySelector("#horizontalComponent");
+      const sections = gsap.utils.toArray(
+        "#horizontalComponent #horizontalSections"
+      );
+      
+      const scrollTween = gsap.to(sections, {
+        xPercent: -100 * (sections.length - 1),
+        ease: "none",
+        scrollTrigger: {
+          trigger: "#horizontalComponent",
+          pin: true,
+          scrub: 1,
+          end: "+=4000",
+          markers: false,
         },
       });
     });
@@ -528,256 +551,263 @@ function App() {
     // Tablet portrait (481px to 768px)
     media.add("(min-width: 481px) and (max-width: 768px)", () => {
       gsap.from(split.words, {
-        duration: .8,
+        duration: 0.8,
         opacity: 0,
         y: 50,
         stagger: 0.1,
         ease: "back.out",
       });
-     
 
-     gsap.from(aboutME.chars, {
-      opacity: 0,
-      y: -100,
-      x: 100,
-      stagger: 0.1,
-      ease: "back.out",
-      scrollTrigger: {
-        trigger: aboutME.chars,
-        markers: false,
-        start: "800% 100%",
-        end: "1000% 80%",
-        scrub: 1,
-      },
-    });
+      gsap.from(aboutME.chars, {
+        opacity: 0,
+        y: -100,
+        x: 100,
+        stagger: 0.1,
+        ease: "back.out",
+        scrollTrigger: {
+          trigger: aboutME.chars,
+          markers: false,
+          start: "800% 100%",
+          end: "1000% 80%",
+          scrub: 1,
+        },
+      });
 
-    gsap.from(aboutPara.words, {
-      // duration: 1,
-      opacity: 0,
-      y: 70,
-      rotateZ:"50",
-      stagger: 0.1,
-      ease: "back.out",
-      // pin:true,
-      scrollTrigger: {
-        trigger: aboutPara.words,
-        markers: false,
-        start: "1200% 95%",
-        end: "1400% 75%",
-        scrub: 1.5,
-      },
-    });
+      gsap.from(aboutPara.words, {
+        // duration: 1,
+        opacity: 0,
+        y: 70,
+        rotateZ: "50",
+        stagger: 0.1,
+        ease: "back.out",
+        // pin:true,
+        scrollTrigger: {
+          trigger: aboutPara.words,
+          markers: false,
+          start: "1200% 95%",
+          end: "1400% 75%",
+          scrub: 1.5,
+        },
+      });
 
-    gsap.from(s3Text.words, {
-      // duration: 1,
-      opacity: 0,
-      x: 500,
-      stagger: 0.1,
-      // ease: "back.out",
-      scrollTrigger: {
-        trigger: s3Text.words,
-        markers: false,
-        start: "0% 90%",
-        end: "400% 70%",
-        scrub: 1,
-      },
-    });
+      gsap.from(s3Text.words, {
+        // duration: 1,
+        opacity: 0,
+        x: 500,
+        stagger: 0.1,
+        // ease: "back.out",
+        scrollTrigger: {
+          trigger: s3Text.words,
+          markers: false,
+          start: "0% 90%",
+          end: "400% 70%",
+          scrub: 1,
+        },
+      });
 
-    gsap.from(s3Para.chars, {
-      // duration: 1,
-      // opacity: 0,
-      scale:0,
-      y: 50,
-      stagger: 0.1,
-      // ease: "back.out",
-      scrollTrigger: {
-        trigger: s3Para.chars,
-        markers: false,
-        start: "0% 80%",
-        end: "200px 80%",
-        scrub: 1,
-      },
-    });
+      gsap.from(s3Para.chars, {
+        // duration: 1,
+        // opacity: 0,
+        scale: 0,
+        y: 50,
+        stagger: 0.1,
+        // ease: "back.out",
+        scrollTrigger: {
+          trigger: s3Para.chars,
+          markers: false,
+          start: "0% 80%",
+          end: "200px 80%",
+          scrub: 1,
+        },
+      });
 
-    gsap.from(techStack.chars, {
-      // duration: 1,
-      scale: 0,
-      rotateZ: 200,
-      x: 100,
-      y: -100,
-      stagger: 0.1,
-      ease: "back.out",
-      scrollTrigger: {
-        trigger: techStack.chars,
-        markers: false,
-        start: "3300% 90%",
-        end: "3500% 70%",
-        scrub: 1,
-      },
-    });
+      gsap.from(techStack.chars, {
+        // duration: 1,
+        scale: 0,
+        rotateZ: 200,
+        x: 100,
+        y: -100,
+        stagger: 0.1,
+        ease: "back.out",
+        scrollTrigger: {
+          trigger: techStack.chars,
+          markers: false,
+          start: "3300% 90%",
+          end: "3500% 70%",
+          scrub: 1,
+        },
+      });
 
-    gsap.from(".uiService",{
-      opacity:0,
-      scale:0,
-      stagger: 0.4,
-      // ease: "back.out",
-      scrollTrigger: {
-        trigger: ".uiService",
-        markers: false,
-        start: "0% 80%",
-        end: "100% 70%",
-        scrub: 1,
-      },
-    });
+      gsap.from(".uiService", {
+        opacity: 0,
+        scale: 0,
+        stagger: 0.4,
+        // ease: "back.out",
+        scrollTrigger: {
+          trigger: ".uiService",
+          markers: false,
+          start: "0% 80%",
+          end: "100% 70%",
+          scrub: 1,
+        },
+      });
 
-    gsap.set(
-      [".frontend","blockchain", ".backend", ".os", ".dev", ".hosting", ".cybertools"],
-      {
-        scale: 1,
-        opacity: 1,
-        y: 0,
+      gsap.set(
+        [
+          ".frontend",
+          "blockchain",
+          ".backend",
+          ".os",
+          ".dev",
+          ".hosting",
+          ".cybertools",
+        ],
+        {
+          scale: 1,
+          opacity: 1,
+          y: 0,
+          x: 0,
+          borderRadius: 10,
+        }
+      );
+
+      gsap.from(".frontend", {
+        // borderRadius: 50,
+        // scale: 0.1,
+        x: 500,
+        opacity: 0,
+        // ease: "back.out",
+        stagger: 0.1,
+        scrollTrigger: {
+          trigger: ".frontend",
+          start: "0px 100%",
+          end: "1000px 0%",
+          markers: false,
+          scrub: 1,
+        },
+      });
+
+      gsap.from(".backend", {
+        x: -500,
+        opacity: 0,
+        ease: "back.inOut",
+        stagger: 0.1,
+        scrollTrigger: {
+          trigger: ".backend",
+          start: "0px 80%",
+          end: "400px 70%",
+          markers: false,
+          scrub: 1,
+        },
+      });
+
+      gsap.from(".blockchain", {
+        borderRadius: 100,
+        scale: 0.1,
+        // x: -1000,
+        // opacity: 0,
+        ease: "back.inOut",
+        stagger: 0.1,
+        scrollTrigger: {
+          trigger: ".blockchain",
+          start: "0px 80%",
+          end: "200px 65%",
+          markers: false,
+          scrub: 1,
+        },
+      });
+
+      gsap.from(".os", {
+        rotateX: "100",
+        ease: "back.inOut",
+        stagger: 0.1,
+        scrollTrigger: {
+          trigger: ".os",
+          start: "0px 80%",
+          end: "100px 70%",
+          markers: false,
+          scrub: 1,
+        },
+      });
+
+      gsap.from(".dev", {
+        // borderRadius: 50,
+        // scale: 0.1,
+        // x: 1000,
+        y: 50,
+        rotateZ: "100",
+        rotationZ: "100",
+        opacity: 0,
+        ease: "back.inOut",
+        stagger: 0.1,
+        scrollTrigger: {
+          trigger: ".dev",
+          start: "0px 80%",
+          end: "100px 70%",
+          markers: false,
+          scrub: 1,
+        },
+      });
+
+      gsap.to(".cyberSecurity", {
+        scrambleText: {
+          text: "Cyber-Security Tools",
+          chars: "▓▒░!@#$%^&*()_+=-{}[]|:;<>?,./",
+          revealDelay: 0.02,
+          speed: 10,
+        },
+        color: "white",
+        scrollTrigger: {
+          trigger: ".cyberSecurity",
+          start: "0px 100%",
+          end: "100px 60%",
+          markers: false,
+          scrub: 1,
+        },
+      });
+
+      gsap.from(".cybertools", {
+        borderRadius: 100,
+        scale: 0.01,
+        y: 80,
+        ease: "back.inOut",
+        stagger: 0.1,
+        scrollTrigger: {
+          trigger: ".cybertools",
+          start: "0px 80%",
+          end: "100px 70%",
+          markers: false,
+          scrub: 1,
+        },
+      });
+
+      gsap.from(".hosting", {
+        borderRadius: 50,
+        scale: 0.01,
+        // rotateZ:100,
+        skewY: 60,
+        y: 70,
+        opacity: 0,
+        ease: "back.inOut",
+        stagger: 0.1,
+        scrollTrigger: {
+          trigger: ".hosting",
+          start: "0px 80%",
+          end: "100px 70%",
+          markers: false,
+          scrub: 1,
+        },
+      });
+
+      gsap.set(".techText", {
         x: 0,
-        borderRadius: 10,
-      }
-    );
-
-    gsap.from(".frontend", {
-      // borderRadius: 50,
-      // scale: 0.1,
-      x: 500,
-      opacity: 0,
-      // ease: "back.out",
-      stagger: 0.1,
-      scrollTrigger: {
-        trigger: ".frontend",
-        start: "0px 100%",
-        end: "1000px 0%",
-        markers: false,
-        scrub: 1,
-      },
-    });
-
-    gsap.from(".backend", {
-      
-      x: -500,
-      opacity: 0,
-      ease: "back.inOut",
-      stagger: 0.1,
-      scrollTrigger: {
-        trigger: ".backend",
-        start: "0px 80%",
-        end: "400px 70%",
-        markers: false,
-        scrub: 1,
-      },
-    });
-
-    gsap.from(".blockchain", {
-      borderRadius: 100,
-      scale: 0.1,
-      // x: -1000,
-      // opacity: 0,
-      ease: "back.inOut",
-      stagger: 0.1,
-      scrollTrigger: {
-        trigger: ".blockchain",
-        start: "0px 80%",
-        end: "200px 65%",
-        markers: false,
-        scrub: 1,
-      },
-    });
-
-
-    gsap.from(".os", {
-      
-      rotateX:"100",
-      ease: "back.inOut",
-      stagger: 0.1,
-      scrollTrigger: {
-        trigger: ".os",
-        start: "0px 80%",
-        end: "100px 70%",
-        markers: false,
-        scrub: 1,
-      },
-    });
-
-    gsap.from(".dev", {
-      // borderRadius: 50,
-      // scale: 0.1,
-      // x: 1000,
-      y:50,
-      rotateZ:"100",
-      rotationZ:"100",
-      opacity: 0,
-      ease: "back.inOut",
-      stagger: 0.1,
-      scrollTrigger: {
-        trigger: ".dev",
-        start: "0px 80%",
-        end: "100px 70%",
-        markers: false,
-        scrub: 1,
-      },
-    });
-
-    gsap.to(".cyberSecurity", {
-      scrambleText: {
-        text: "Cyber-Security Tools",
-        chars: "▓▒░!@#$%^&*()_+=-{}[]|:;<>?,./",
-        revealDelay: 0.02,
-        speed: 10,
-      },
-      color: "white",
-      scrollTrigger: {
-        trigger: ".cyberSecurity",
-        start: "0px 100%",
-        end: "100px 60%",
-        markers: false,
-        scrub: 1,
-      },
-    });
-
-    gsap.from(".cybertools", {
-      borderRadius: 100,
-      scale: 0.01,
-      y: 80,
-      ease: "back.inOut",
-      stagger: 0.1,
-      scrollTrigger: {
-        trigger: ".cybertools",
-        start: "0px 80%",
-        end: "100px 70%",
-        markers: false,
-        scrub: 1,
-      },
-    });
-
-    gsap.from(".hosting", {
-      borderRadius: 50,
-      scale: 0.01,
-      // rotateZ:100,
-      skewY: 60,
-      y: 70,
-      opacity: 0,
-      ease: "back.inOut",
-      stagger: 0.1,
-      scrollTrigger: {
-        trigger: ".hosting",
-        start: "0px 80%",
-        end: "100px 70%",
-        markers: false,
-        scrub: 1,
-      },
-    });
-
-    gsap.set(".techText",{
-        x:0,y:0,opacity:1,scale:1
-      })
-      gsap.from(".techText",{
-        y:-50,
-        opacity:0,
+        y: 0,
+        opacity: 1,
+        scale: 1,
+      });
+      gsap.from(".techText", {
+        y: -50,
+        opacity: 0,
         // ease: "back.out",
         stagger: 0.1,
         scrollTrigger: {
@@ -785,9 +815,9 @@ function App() {
           start: "0px 80%",
           end: "100px 56%",
           markers: false,
-          scrub: .5,
+          scrub: 0.5,
         },
-      })
+      });
 
       gsap.from(project.chars, {
         y: -200,
@@ -807,7 +837,7 @@ function App() {
       });
 
       gsap.from(".projectsP1", {
-       opacity:0,
+        opacity: 0,
         // scale: 0,
         stagger: 0.1,
         ease: "back.out",
@@ -821,35 +851,23 @@ function App() {
       });
 
       gsap.from(".projectsP2", {
-        opacity:0,
-         // scale: 0,
-         stagger: 0.1,
-         ease: "back.out",
-         scrollTrigger: {
-           trigger: ".projectsP2",
-           start: "800px 70%",
-           end: "800px 60%",
-           scrub: 1,
-           markers: false,
-         },
-       });
-
-       gsap.from(p3Text.words, {
-        y: 600,
-        scale: 0,
-        stagger: 0.5,
-        // ease: "back.out",
+        opacity: 0,
+        // scale: 0,
+        stagger: 0.1,
+        ease: "back.out",
         scrollTrigger: {
-          trigger: p3Text.words,
-          start: "600px 80%",
-          end: "700px 70%",
+          trigger: ".projectsP2",
+          start: "800px 70%",
+          end: "800px 60%",
           scrub: 1,
           markers: false,
         },
       });
 
+     
+
       gsap.from(".card", {
-        rotateX:80,
+        rotateX: 80,
         ease: "back.out",
         scrollTrigger: {
           trigger: ".card",
@@ -859,261 +877,300 @@ function App() {
           scrub: 1,
         },
       });
+
+      gsap.from(p3Text.words, {
+        y: 600,
+        scale: 0,
+        stagger: 0.1,
+        // ease: "back.out",
+        scrollTrigger: {
+          trigger: p3Text.words,
+          start: window.innerWidth > 1024 ? "3800px 90%" : "3800px 90%",
+          end: window.innerWidth > 1024 ? "3900px 90%" : "3900px 90%",
+          scrub: 1,
+          markers: false,
+        },
+      });
+      
+      const container = document.querySelector("#horizontalComponent");
+      const sections = gsap.utils.toArray(
+        "#horizontalComponent #horizontalSections"
+      );
+      
+      const scrollTween = gsap.to(sections, {
+        xPercent: -100 * (sections.length - 1),
+        ease: "none",
+        scrollTrigger: {
+          trigger: "#horizontalComponent",
+          pin: true,
+          scrub: 1,
+          end: "+=4000",
+          markers: false,
+        },
+      });
     });
+
 
     //Desktop  & Laptop
     media.add("(min-width: 769px)", () => {
       gsap.from(split.words, {
-        duration: .8,
+        duration: 0.8,
         opacity: 0,
         y: 100,
         stagger: 0.1,
         ease: "back.out",
       });
-     
 
-     gsap.from(aboutME.chars, {
-      opacity: 0,
-      y: -100,
-      x: 100,
-      stagger: 0.1,
-      ease: "back.out",
-      scrollTrigger: {
-        trigger: aboutME.chars,
-        markers: false,
-        start: "600% 100%",
-        end: "800% 100%",
-        scrub: 1,
-      },
-    });
+      gsap.from(aboutME.chars, {
+        opacity: 0,
+        y: -100,
+        x: 100,
+        stagger: 0.1,
+        ease: "back.out",
+        scrollTrigger: {
+          trigger: aboutME.chars,
+          markers: false,
+          start: "600% 100%",
+          end: "800% 100%",
+          scrub: 1,
+        },
+      });
 
-    gsap.from(aboutPara.words, {
-      // duration: 1,
-      opacity: 0,
-      y: 70,
-      rotateZ:"50",
-      stagger: 0.1,
-      ease: "back.out",
-      // pin:true,
-      scrollTrigger: {
-        trigger: aboutPara.words,
-        markers: false,
-        start: "1000% 100%",
-        end: "1200% 100%",
-        scrub: 1.5,
-      },
-    });
+      gsap.from(aboutPara.words, {
+        // duration: 1,
+        opacity: 0,
+        y: 70,
+        rotateZ: "50",
+        stagger: 0.1,
+        ease: "back.out",
+        // pin:true,
+        scrollTrigger: {
+          trigger: aboutPara.words,
+          markers: false,
+          start: "1000% 100%",
+          end: "1200% 100%",
+          scrub: 1.5,
+        },
+      });
 
-    gsap.from(s3Text.words, {
-      // duration: 1,
-      opacity: 0,
-      x: 500,
-      stagger: 0.1,
-      // ease: "back.out",
-      scrollTrigger: {
-        trigger: s3Text.words,
-        markers: false,
-        start: "0% 90%",
-        end: "400% 70%",
-        scrub: 1,
-      },
-    });
+      gsap.from(s3Text.words, {
+        // duration: 1,
+        opacity: 0,
+        x: 500,
+        stagger: 0.1,
+        // ease: "back.out",
+        scrollTrigger: {
+          trigger: s3Text.words,
+          markers: false,
+          start: "0% 90%",
+          end: "400% 70%",
+          scrub: 1,
+        },
+      });
 
-    gsap.from(s3Para.chars, {
-      // duration: 1,
-      // opacity: 0,
-      scale:0,
-      y: 50,
-      stagger: 0.1,
-      // ease: "back.out",
-      scrollTrigger: {
-        trigger: s3Para.chars,
-        markers: false,
-        start: "50px 80%",
-        end: "250px 80%",
-        scrub: 1,
-      },
-    });
+      gsap.from(s3Para.chars, {
+        // duration: 1,
+        // opacity: 0,
+        scale: 0,
+        y: 50,
+        stagger: 0.1,
+        // ease: "back.out",
+        scrollTrigger: {
+          trigger: s3Para.chars,
+          markers: false,
+          start: "50px 80%",
+          end: "250px 80%",
+          scrub: 1,
+        },
+      });
 
-    gsap.from(techStack.chars, {
-      // duration: 1,
-      scale: 0,
-      rotateZ: 200,
-      x: 100,
-      y: -100,
-      stagger: 0.1,
-      ease: "back.out",
-      scrollTrigger: {
-        trigger: techStack.chars,
-        markers: false,
-        start: "3300% 90%",
-        end: "3500% 70%",
-        scrub: 1,
-      },
-    });
+      gsap.from(techStack.chars, {
+        // duration: 1,
+        scale: 0,
+        rotateZ: 200,
+        x: 100,
+        y: -100,
+        stagger: 0.1,
+        ease: "back.out",
+        scrollTrigger: {
+          trigger: techStack.chars,
+          markers: false,
+          start: "3300% 90%",
+          end: "3500% 70%",
+          scrub: 1,
+        },
+      });
 
-    gsap.from(".uiService",{
-      opacity:0,
-      scale:0,
-      stagger: 0.4,
-      // ease: "back.out",
-      scrollTrigger: {
-        trigger: ".uiService",
-        markers: false,
-        start: "0% 80%",
-        end: "100% 70%",
-        scrub: 1,
-      },
-    });
+      gsap.from(".uiService", {
+        opacity: 0,
+        scale: 0,
+        stagger: 0.4,
+        // ease: "back.out",
+        scrollTrigger: {
+          trigger: ".uiService",
+          markers: false,
+          start: "0% 80%",
+          end: "100% 70%",
+          scrub: 1,
+        },
+      });
 
-    gsap.set(
-      [".frontend","blockchain", ".backend", ".os", ".dev", ".hosting", ".cybertools"],
-      {
-        scale: 1,
-        opacity: 1,
-        y: 0,
+      gsap.set(
+        [
+          ".frontend",
+          "blockchain",
+          ".backend",
+          ".os",
+          ".dev",
+          ".hosting",
+          ".cybertools",
+        ],
+        {
+          scale: 1,
+          opacity: 1,
+          y: 0,
+          x: 0,
+          borderRadius: 10,
+        }
+      );
+
+      gsap.from(".frontend", {
+        // borderRadius: 50,
+        // scale: 0.1,
+        x: 500,
+        opacity: 0,
+        // ease: "back.out",
+        stagger: 0.1,
+        scrollTrigger: {
+          trigger: ".frontend",
+          start: "0px 100%",
+          end: "1000px 0%",
+          markers: false,
+          scrub: 1,
+        },
+      });
+
+      gsap.from(".backend", {
+        x: -500,
+        opacity: 0,
+        ease: "back.inOut",
+        stagger: 0.1,
+        scrollTrigger: {
+          trigger: ".backend",
+          start: "0px 80%",
+          end: "400px 70%",
+          markers: false,
+          scrub: 1,
+        },
+      });
+
+      gsap.from(".blockchain", {
+        borderRadius: 100,
+        scale: 0.1,
+        // x: -1000,
+        // opacity: 0,
+        ease: "back.inOut",
+        stagger: 0.1,
+        scrollTrigger: {
+          trigger: ".blockchain",
+          start: "0px 80%",
+          end: "200px 65%",
+          markers: false,
+          scrub: 1,
+        },
+      });
+
+      gsap.from(".os", {
+        rotateX: "100",
+        ease: "back.inOut",
+        stagger: 0.1,
+        scrollTrigger: {
+          trigger: ".os",
+          start: "0px 80%",
+          end: "100px 70%",
+          markers: false,
+          scrub: 1,
+        },
+      });
+
+      gsap.from(".dev", {
+        // borderRadius: 50,
+        // scale: 0.1,
+        // x: 1000,
+        y: 50,
+        rotateZ: "100",
+        rotationZ: "100",
+        opacity: 0,
+        ease: "back.inOut",
+        stagger: 0.1,
+        scrollTrigger: {
+          trigger: ".dev",
+          start: "0px 80%",
+          end: "100px 70%",
+          markers: false,
+          scrub: 1,
+        },
+      });
+
+      gsap.to(".cyberSecurity", {
+        scrambleText: {
+          text: "Cyber-Security Tools",
+          chars: "▓▒░!@#$%^&*()_+=-{}[]|:;<>?,./",
+          revealDelay: 0.02,
+          speed: 10,
+        },
+        color: "white",
+        scrollTrigger: {
+          trigger: ".cyberSecurity",
+          start: "0px 100%",
+          end: "100px 60%",
+          markers: false,
+          scrub: 1,
+        },
+      });
+
+      gsap.from(".cybertools", {
+        borderRadius: 100,
+        scale: 0.01,
+        y: 80,
+        ease: "back.inOut",
+        stagger: 0.1,
+        scrollTrigger: {
+          trigger: ".cybertools",
+          start: "0px 80%",
+          end: "100px 70%",
+          markers: false,
+          scrub: 1,
+        },
+      });
+
+      gsap.from(".hosting", {
+        borderRadius: 50,
+        scale: 0.01,
+        // rotateZ:100,
+        skewY: 60,
+        y: 70,
+        opacity: 0,
+        ease: "back.inOut",
+        stagger: 0.1,
+        scrollTrigger: {
+          trigger: ".hosting",
+          start: "0px 80%",
+          end: "100px 70%",
+          markers: false,
+          scrub: 1,
+        },
+      });
+
+      gsap.set(".techText", {
         x: 0,
-        borderRadius: 10,
-      }
-    );
-
-    gsap.from(".frontend", {
-      // borderRadius: 50,
-      // scale: 0.1,
-      x: 500,
-      opacity: 0,
-      // ease: "back.out",
-      stagger: 0.1,
-      scrollTrigger: {
-        trigger: ".frontend",
-        start: "0px 100%",
-        end: "1000px 0%",
-        markers: false,
-        scrub: 1,
-      },
-    });
-
-    gsap.from(".backend", {
-      
-      x: -500,
-      opacity: 0,
-      ease: "back.inOut",
-      stagger: 0.1,
-      scrollTrigger: {
-        trigger: ".backend",
-        start: "0px 80%",
-        end: "400px 70%",
-        markers: false,
-        scrub: 1,
-      },
-    });
-
-    gsap.from(".blockchain", {
-      borderRadius: 100,
-      scale: 0.1,
-      // x: -1000,
-      // opacity: 0,
-      ease: "back.inOut",
-      stagger: 0.1,
-      scrollTrigger: {
-        trigger: ".blockchain",
-        start: "0px 80%",
-        end: "200px 65%",
-        markers: false,
-        scrub: 1,
-      },
-    });
-
-
-    gsap.from(".os", {
-      
-      rotateX:"100",
-      ease: "back.inOut",
-      stagger: 0.1,
-      scrollTrigger: {
-        trigger: ".os",
-        start: "0px 80%",
-        end: "100px 70%",
-        markers: false,
-        scrub: 1,
-      },
-    });
-
-    gsap.from(".dev", {
-      // borderRadius: 50,
-      // scale: 0.1,
-      // x: 1000,
-      y:50,
-      rotateZ:"100",
-      rotationZ:"100",
-      opacity: 0,
-      ease: "back.inOut",
-      stagger: 0.1,
-      scrollTrigger: {
-        trigger: ".dev",
-        start: "0px 80%",
-        end: "100px 70%",
-        markers: false,
-        scrub: 1,
-      },
-    });
-
-    gsap.to(".cyberSecurity", {
-      scrambleText: {
-        text: "Cyber-Security Tools",
-        chars: "▓▒░!@#$%^&*()_+=-{}[]|:;<>?,./",
-        revealDelay: 0.02,
-        speed: 10,
-      },
-      color: "white",
-      scrollTrigger: {
-        trigger: ".cyberSecurity",
-        start: "0px 100%",
-        end: "100px 60%",
-        markers: false,
-        scrub: 1,
-      },
-    });
-
-    gsap.from(".cybertools", {
-      borderRadius: 100,
-      scale: 0.01,
-      y: 80,
-      ease: "back.inOut",
-      stagger: 0.1,
-      scrollTrigger: {
-        trigger: ".cybertools",
-        start: "0px 80%",
-        end: "100px 70%",
-        markers: false,
-        scrub: 1,
-      },
-    });
-
-    gsap.from(".hosting", {
-      borderRadius: 50,
-      scale: 0.01,
-      // rotateZ:100,
-      skewY: 60,
-      y: 70,
-      opacity: 0,
-      ease: "back.inOut",
-      stagger: 0.1,
-      scrollTrigger: {
-        trigger: ".hosting",
-        start: "0px 80%",
-        end: "100px 70%",
-        markers: false,
-        scrub: 1,
-      },
-    });
-
-    gsap.set(".techText",{
-        x:0,y:0,opacity:1,scale:1
-      })
-      gsap.from(".techText",{
-        y:-50,
-        opacity:0,
+        y: 0,
+        opacity: 1,
+        scale: 1,
+      });
+      gsap.from(".techText", {
+        y: -50,
+        opacity: 0,
         // ease: "back.out",
         stagger: 0.1,
         scrollTrigger: {
@@ -1121,46 +1178,31 @@ function App() {
           start: "0px 80%",
           end: "100px 56%",
           markers: false,
-          scrub: .5,
+          scrub: 0.5,
         },
-      })
+      });
 
-      gsap.from(project.chars, {
-        y: -200,
-        rotateZ: 100,
-        rotateX: 200,
-        rotateY: 200,
-        scale: 0,
-        stagger: 0.5,
-        ease: "back.out",
+      
+
+      gsap.from(".p1Right", {
+        opacity: 0,
+        // scale: 0,
+        x: 600,
+        stagger: 0.1,
+        //  ease: "back.out",
         scrollTrigger: {
-          trigger: project.chars,
-          start: "0% 50%",
-          end: "100% 30%",
+          trigger: ".p1Right",
+          start: "0px 50%",
+          end: "100px 50%",
           scrub: 1,
           markers: false,
         },
       });
 
-      gsap.from(".p1Right", {
-        opacity:0,
-         // scale: 0,
-         x:600,
-         stagger: 0.1,
-        //  ease: "back.out",
-         scrollTrigger: {
-           trigger: ".p1Right",
-           start: "0px 50%",
-           end: "100px 50%",
-           scrub: 1,
-           markers: false,
-         },
-       });
-
       gsap.from(".p1Left", {
-       opacity:0,
+        opacity: 0,
         // scale: 0,
-        x:-600,
+        x: -600,
         stagger: 0.1,
         // ease: "back.out",
         scrollTrigger: {
@@ -1172,25 +1214,22 @@ function App() {
         },
       });
 
-
-    
-
-       gsap.from(".p2Right", {
-        opacity:0,
-         x:600,
-         stagger: 0.1,
-         scrollTrigger: {
-           trigger: ".p2Right",
-           start: window.innerWidth > 1024 ? "2000px 90%" : "1600px 90%",
+      gsap.from(".p2Right", {
+        opacity: 0,
+        x: 600,
+        stagger: 0.1,
+        scrollTrigger: {
+          trigger: ".p2Right",
+          start: window.innerWidth > 1024 ? "2000px 90%" : "1600px 90%",
           end: window.innerWidth > 1024 ? "2100px 90%" : "1700px 90%",
-           scrub: 1,
-           markers: false,
-         },
-       });
+          scrub: 1,
+          markers: false,
+        },
+      });
 
       gsap.from(".p2Left", {
-       opacity:0,
-        x:-600,
+        opacity: 0,
+        x: -600,
         stagger: 0.1,
         scrollTrigger: {
           trigger: ".p2Left",
@@ -1201,22 +1240,9 @@ function App() {
         },
       });
 
-       gsap.from(p3Text.words, {
-        y: 600,
-        scale: 0,
-        stagger: 0.1,
-        // ease: "back.out",
-        scrollTrigger: {
-          trigger: p3Text.words,
-          start: window.innerWidth > 1024 ? "3400px 90%" : "1600px 90%",
-          end: window.innerWidth > 1024 ? "3500px 90%" : "1700px 90%",
-          scrub: 1,
-          markers: false,
-        },
-      });
-
+      
       gsap.from(".card", {
-        rotateX:80,
+        rotateX: 80,
         ease: "back.out",
         scrollTrigger: {
           trigger: ".card",
@@ -1226,29 +1252,68 @@ function App() {
           scrub: 1,
         },
       });
+
+      gsap.from(project.chars, {
+        y: -200,
+        rotateZ: 100,
+        rotateX: 200,
+        rotateY: 200,
+        scale: 0,
+        stagger: 0.5,
+        ease: "back.out",
+        scrollTrigger: {
+          trigger: project.chars,
+          start: "0% 50%",
+          end: "100% 30%",
+          scrub: 1,
+          markers: false,
+        },
+      });
+
+
+      // ye niche walo ko sabi devices ke liye set kr
+      gsap.from(p3Text.words, {
+        y: 600,
+        scale: 0,
+        stagger: 0.1,
+        // ease: "back.out",
+        scrollTrigger: {
+          trigger: p3Text.words,
+          start: window.innerWidth > 1024 ? "3800px 90%" : "3800px 90%",
+          end: window.innerWidth > 1024 ? "3900px 90%" : "3900px 90%",
+          scrub: 1,
+          markers: false,
+        },
+      });
+      
+      const container = document.querySelector("#horizontalComponent");
+      const sections = gsap.utils.toArray(
+        "#horizontalComponent #horizontalSections"
+      );
+      
+      const scrollTween = gsap.to(sections, {
+        xPercent: -100 * (sections.length - 1),
+        ease: "none",
+        scrollTrigger: {
+          trigger: "#horizontalComponent",
+          pin: true,
+          scrub: 1,
+          end: "+=4000",
+          markers: false,
+        },
+      });
     });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   });
+
+  const horizontalComponent = useRef(null);
+  // ID: horizontalSections;
 
   return (
     <div className="w-full bg-[#11081F]  mt-0 mb-0  ">
       {/* is upar wali me bhi overflow hidden he */}
       <div className="w-full overflow-hidden   ">
         {/* Navbar */}
-        <motion.nav 
+        <motion.nav
           initial={{ y: -100 }}
           animate={{ y: 0 }}
           transition={{ duration: 0.8, delay: 0.8 }}
@@ -1266,7 +1331,9 @@ function App() {
               <li className="hover:text-[#2FC0F5] transaal cursor-pointer transition-all duration-200 border-b-2 border-transparent  hover:border-[#2FC0F5]  ">
                 Home
               </li>
-              <li className="hover:text-[#2FC0F5] transaal cursor-pointer transition-all duration-200 border-b-2 border-transparent  hover:border-[#2FC0F5]  ">
+              <li  onClick={()=>{
+
+              }} className="hover:text-[#2FC0F5] transaal cursor-pointer transition-all duration-200 border-b-2 border-transparent  hover:border-[#2FC0F5]  ">
                 GitHub
               </li>
               <li className="hover:text-[#2FC0F5] transaal cursor-pointer transition-all duration-200 border-b-2 border-transparent  hover:border-[#2FC0F5]  ">
@@ -1403,8 +1470,10 @@ function App() {
                 alt=""
               />
 
-              <h1 className="firstText text-[60px] sm:text-[100px] sm:leading-20
-                w-full backdrop-blur-xs text-center z-0  leading-13 md:text-[150px] md:leading-30">
+              <h1
+                className="firstText text-[60px] sm:text-[100px] sm:leading-20
+                w-full backdrop-blur-xs text-center z-0  leading-13 md:text-[150px] md:leading-30"
+              >
                 I'm <br /> Gaurav {window.innerWidth > 768 && <br />} Mahajan
               </h1>
             </div>
@@ -1412,7 +1481,9 @@ function App() {
 
           {/* 2nd Section */}
           <div className=" w-[85vw] sm:w-[65vw] h-screen  text-white flex justify-center items-center  flex-col">
-            <h1 className="aboutMe mb-10 text-[45px] md:text-[80px]">About ME</h1>
+            <h1 className="aboutMe mb-10 text-[45px] md:text-[80px]">
+              About ME
+            </h1>
             <p className="aboutMePara md:text-[30px]">
               Hey there! I'm Gaurav Mahajan, a passionate MERN stack developer
               on a mission to create the world’s best websites — and one day,
@@ -1449,18 +1520,18 @@ function App() {
               />
               <div className=" z-1 ">
                 <h1 className="s3Text md:text-2xl text-[30px] leading-7  backdrop-blur-xs  text-center w-full">
-                  Helping startups and businesses scale with full-stack website and Web3 solutions to increase revenue.
+                  Helping startups and businesses scale with full-stack website
+                  and Web3 solutions to increase revenue.
                 </h1>
                 <p className="s3Para text-center w-full mt-3 text-md">
-                Design and development with   
+                  Design and development with
                   <span className="backdrop-blur-xs mx-1 font-bold ">
-                  purpose — built
+                    purpose — built
                   </span>
-                  to 
+                  to
                   <span className="backdrop-blur-xs mx-1 font-bold ">
-                  solve real problems.
+                    solve real problems.
                   </span>
-                  
                 </p>
               </div>
             </div>
@@ -1494,7 +1565,9 @@ function App() {
           {/* 4th Section tech stack */}
           <div className="w-[85vw] sm:w-[65vw]   text-white flex justify-center items-center relative flex-col">
             {/* horizontal div */}
-            <h1 className=" techStack text-4xl mb-6 md:text-[80px]">Tech Stack</h1>
+            <h1 className=" techStack text-4xl mb-6 md:text-[80px]">
+              Tech Stack
+            </h1>
             <div className="w-full relative flex justify-center items-center flex-col ">
               {/* UI/UX  */}
 
@@ -1533,37 +1606,37 @@ function App() {
 
               {/* gradients */}
               <div>
-              <img
-                className="absolute top-1200 left-90 md:left-200 scale-200 "
-                src={`${gradient}`}
-                alt=""
-              />
+                <img
+                  className="absolute top-1200 left-90 md:left-200 scale-200 "
+                  src={`${gradient}`}
+                  alt=""
+                />
 
-              <img
-                className="absolute top-150 left-70 md:left-270 scale-200 "
-                src={`${gradient}`}
-                alt=""
-              />
+                <img
+                  className="absolute top-150 left-70 md:left-270 scale-200 "
+                  src={`${gradient}`}
+                  alt=""
+                />
 
-              <img
-                className="absolute top-500 -left-70 scale-200 "
-                src={`${gradient}`}
-                alt=""
-              />
+                <img
+                  className="absolute top-500 -left-70 scale-200 "
+                  src={`${gradient}`}
+                  alt=""
+                />
 
-              <img
-                className="absolute top-700 left-70 scale-200 "
-                src={`${gradient}`}
-                alt=""
-              />
-{/* 
+                <img
+                  className="absolute top-700 left-70 scale-200 "
+                  src={`${gradient}`}
+                  alt=""
+                />
+                {/* 
               <img
                 className="absolute top-1000 -left-90 scale-200 "
                 src={`${gradient}`}
                 alt=""
               /> */}
 
-              {/* <img
+                {/* <img
                 className="absolute top-1200 left-90 scale-200 "
                 src={`${gradient}`}
                 alt=""
@@ -2048,7 +2121,7 @@ function App() {
                         className="blockchain w-[20vw] sm:w-[15vw] md:w-[12vw] lg:w-[10vw] xl:w-[7vw] 2xl:w-[6vw] h-auto rounded-lg"
                         src={`${alchemy}`}
                         alt=""
-                      /> 
+                      />
                       <h1 className="text-white blockchain rounded-md  bg-linear-to-tl  to-[#0055FE] from-[#1ABBF2] px-3 py-1 mt-2">
                         Alchemy
                       </h1>
@@ -2327,466 +2400,330 @@ function App() {
           </div>
         </div>
 
-        {/* horizontal projects */}
       </div>
 
+      
+      {/* Ready to build something that performs and sells? Let’s talk. */}
+
+      {/* overflow-hidden he niche */}
+      <h1 className="project  text-white text-center my-[10vh] text-4xl md:text-[60px] z-10 ">
+        Projects
+      </h1>
       <div
-        id="scrollContainer"
-        className="w-full flex h-screen overflow-hidden  relative        "
+        id="horizontalComponent"
+        className="w-full  flex h-svh   relative   overflow-hidden     "
       >
-        {/* scroll container me overflow hidden he */}
+        {/* first */}
         <div
-          id="section"
-          className="w-[100vw] h-screen flex justify-center   items-center  text-white flex-col "
+          id="horizontalSections"
+          className="w-full flex justify-center items-center   "
         >
-          <h1 className="project mb-[7vh] text-4xl md:text-[60px] z-10 ">Projects</h1>
+          <div className="w-[85vw] md:w-[65vw] h-[90svh] bg-[#ffffff1b] p-4 md:p-8 rounded-2xl backdrop-blur-sm overflow-y-auto flex flex-col relative">
+            <h1 className="text-3xl md:text-5xl font-bold text-white mb-4 md:mb-6 sticky top-0 bg-[#ffffff1b] py-4 z-10 w-full text-center rounded-2xl">
+              DevLab - Real-Time Collaborative IDE with AI Integration 🚀
+            </h1>
 
-         
-          <div className="w-[90%] sm:w-[75vw] md:w-[65vw]  py-2 grid grid-cols-1 md:grid-cols-2 relative backdrop-blur-3xl">
-            {/* gradient */}
-            <img
-              className="absolute top-0 left-0 scale-[2.5] md:scale-[2] md:left-140"
-              src={`${gradient}`}
-              alt=""
-            />
-            {/* details for desktop */}
-            <div className="hidden md:block bg-transparent p-5 z-10">
-            <h1 className="text-[40px] projectsP1  p1Left  font-bold      text-gray-300 z-10">
-            Full Stack Chatting Website
-          </h1>
-            <div
-              
-              className="w-[85vw] md:w-[35vw]  bg-[#202429] px-10 py-5    text-[#ffffffcd] rounded-lg relative p1Left"
-            >
-              
-              <motion.h2
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.2, duration: 0.4 }}
-                className="text-xl font-semibold mb-"
-              >
-                Specialities
-              </motion.h2>
-              <motion.ul
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.3, duration: 0.4 }}
-                className="list-disc pl-6 mb-2"
-              >
-                <li>Global Chat</li>
-                <li>Realtime Chat</li>
-              </motion.ul>
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.4, duration: 0.4 }}
-              >
-                <h3 className="font-semibold mb-2">Tech Used</h3>
-                <p className="mb-2">
-                  Frontend: Html, Css, Tailwindcss, GSAP, scrollTrigger,
-                  Reactjs, Zustand, Socket.io-client, React Router Dom, Axios,
-                  javascript.
+            <div className="flex-grow overflow-y-auto">
+              <div className="mb-6 md:mb-8">
+                <h2 className="text-xl md:text-2xl text-[#2FC0F5] mb-3 md:mb-4">
+                  Project Description
+                </h2>
+                <p className="text-gray-300 leading-relaxed text-sm md:text-base">
+                  DevLab is a powerful full-stack real-time online IDE that enables developers to collaborate seamlessly while creating projects. With integrated AI assistance powered by Meta's Llama 3 (70B instruction model), real-time collaboration features, and support for 20+ programming languages, DevLab provides a comprehensive development environment for teams.
                 </p>
-                <p>
-                  Backend: Nodejs, Expressjs, MongoDB, Mongoose, Socket.io,
-                  RESTful API, Jsonwebtoken.
-                </p>
-              </motion.div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+                <div className="space-y-3 md:space-y-4">
+                  <h2 className="text-xl md:text-2xl text-[#2FC0F5]">
+                    Key Features
+                  </h2>
+                  <div className="space-y-4">
+                    <div>
+                      <h3 className="text-lg text-[#2FC0F5]">💻 Real-Time Collaboration</h3>
+                      <ul className="text-gray-300 space-y-1 text-sm">
+                        <li>Live Code Editing</li>
+                        <li>Cursor Sharing</li>
+                        <li>Built-in Chat System</li>
+                        <li>File Structure Management</li>
+                      </ul>
+                    </div>
+                    <div>
+                      <h3 className="text-lg text-[#2FC0F5]">🤖 AI Integration</h3>
+                      <ul className="text-gray-300 space-y-1 text-sm">
+                        <li>Meta Llama 3 (70B model)</li>
+                        <li>AI-assisted Code Modifications</li>
+                        <li>Intelligent Code Completion</li>
+                        <li>Context-aware Assistance</li>
+                      </ul>
+                    </div>
+                    <div>
+                      <h3 className="text-lg text-[#2FC0F5]">⚡ Code Execution</h3>
+                      <ul className="text-gray-300 space-y-1 text-sm">
+                        <li>Piston API Integration</li>
+                        <li>Real-time Output</li>
+                        <li>Multi-language Support</li>
+                        <li>Instant Feedback</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="space-y-3 md:space-y-4">
+                  <h2 className="text-xl md:text-2xl text-[#2FC0F5]">
+                    Tech Stack
+                  </h2>
+                  <div className="space-y-4">
+                    <div>
+                      <h3 className="text-lg text-[#2FC0F5]">Frontend</h3>
+                      <ul className="text-gray-300 space-y-1 text-sm">
+                        <li>React.js v19.1.0</li>
+                        <li>Tailwind CSS v4.1.7</li>
+                        <li>Framer Motion v12.15.0</li>
+                        <li>Socket.io Client v4.8.1</li>
+                        <li>React Router DOM v6.30.1</li>
+                        <li>Axios v1.9.0</li>
+                        <li>Zustand</li>
+                        <li>JWT Decode v4.0.0</li>
+                        <li>Lucide React v0.511.0</li>
+                        <li>React Spinners v0.17.0</li>
+                        <li>CodeMirror</li>
+                        <li>Monaco Editor</li>
+                      </ul>
+                    </div>
+                    <div>
+                      <h3 className="text-lg text-[#2FC0F5]">Backend</h3>
+                      <ul className="text-gray-300 space-y-1 text-sm">
+                        <li>Node.js</li>
+                        <li>Express.js v5.1.0</li>
+                        <li>MongoDB v6.16.0</li>
+                        <li>Mongoose v8.15.1</li>
+                        <li>Socket.io v4.8.1</li>
+                        <li>JWT v9.0.2</li>
+                        <li>Bcrypt v6.0.0</li>
+                        <li>Cookie Parser v1.4.7</li>
+                        <li>CORS v2.8.5</li>
+                        <li>Dotenv v16.5.0</li>
+                        <li>Express Validator v7.2.1</li>
+                        <li>Google Auth v9.15.1</li>
+                        <li>Morgan v1.10.0</li>
+                        <li>Winston v3.17.0</li>
+                      </ul>
+                    </div>
+                    <div>
+                      <h3 className="text-lg text-[#2FC0F5]">Third Party Services</h3>
+                      <ul className="text-gray-300 space-y-1 text-sm">
+                        <li>Piston API (Code Execution)</li>
+                        <li>Google OAuth</li>
+                        <li>Monaco Editor (Code Editor)</li>
+                      </ul>
+                    </div>
+                  </div>
+
+                  <h2 className="text-xl md:text-2xl text-[#2FC0F5] mt-4 md:mt-6">
+                    Supported Languages
+                  </h2>
+                  <div className="grid grid-cols-3 gap-2 text-sm">
+                    <div className="space-y-1">
+                      <p className="text-[#2FC0F5]">JavaScript <span className="text-gray-400">18.15.0</span></p>
+                      <p className="text-[#2FC0F5]">TypeScript <span className="text-gray-400">5.0.3</span></p>
+                      <p className="text-[#2FC0F5]">Python <span className="text-gray-400">3.10.0</span></p>
+                      <p className="text-[#2FC0F5]">Java <span className="text-gray-400">15.0.2</span></p>
+                      <p className="text-[#2FC0F5]">C++ <span className="text-gray-400">10.2.0</span></p>
+                      <p className="text-[#2FC0F5]">Go <span className="text-gray-400">1.16.2</span></p>
+                      <p className="text-[#2FC0F5]">Rust <span className="text-gray-400">1.68.2</span></p>
+                    </div>
+                    <div className="space-y-1">
+                      <p className="text-[#2FC0F5]">PHP <span className="text-gray-400">8.2.3</span></p>
+                      <p className="text-[#2FC0F5]">C# <span className="text-gray-400">6.12.0</span></p>
+                      <p className="text-[#2FC0F5]">Kotlin <span className="text-gray-400">1.8.20</span></p>
+                      <p className="text-[#2FC0F5]">Swift <span className="text-gray-400">5.3.3</span></p>
+                      <p className="text-[#2FC0F5]">Scala <span className="text-gray-400">3.2.2</span></p>
+                      <p className="text-[#2FC0F5]">Dart <span className="text-gray-400">2.19.6</span></p>
+                      <p className="text-[#2FC0F5]">Haskell <span className="text-gray-400">9.0.1</span></p>
+                    </div>
+                    <div className="space-y-1">
+                      <p className="text-[#2FC0F5]">Bash <span className="text-gray-400">5.2.0</span></p>
+                      <p className="text-[#2FC0F5]">Perl <span className="text-gray-400">5.36.0</span></p>
+                      <p className="text-[#2FC0F5]">R <span className="text-gray-400">4.1.1</span></p>
+                      <p className="text-[#2FC0F5]">Lua <span className="text-gray-400">5.4.4</span></p>
+                      <p className="text-[#2FC0F5]">Ruby <span className="text-gray-400">3.0.1</span></p>
+                      <p className="text-[#2FC0F5]">C <span className="text-gray-400">10.2.0</span></p>
+                    </div>
+                
+                  </div>
+                </div>
+              </div>
             </div>
 
-            <div className="w-full flex mt-5 px-6 p1Left  items-center">
-            <img className="w-10 h-auto" src={clickPic} alt="png" />
-            <img className="w-10 h-auto mx-5" src={clickPic} alt="png" />
-            </div>
-            </div>
-            {/* macbook code */}
-            <div className="w-full projectsP1 p1Right rounded-lg pt-2 pl-2 border-l-2 border-l-[#ffffff79] border-t-2 border-t-[#ffffff79] bg-linear-to-tl to-[#7127BA]  to-60% from-[#fff]  overflow-hidden backdrop-blur-lg">
-              <img
-                className="backdrop-blur-2xl scale-[3] translate-x-[320px] translate-y-[210px] sm:translate-x-[100%] sm:translate-y-[100%]"
-                src={`${project1}`}
-                alt=""
-              />
-            </div>
-            
-          </div>
-
-          {/* project details */}
-          {openFirstProject ? (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, ease: "easeOut" }}
-              className="w-[85vw] bg-[#202429] px-4 py-1  md:w-[65vw] backdrop-blur-3xl text-[#ffffffcd] rounded-lg relative"
-            >
-              {/* close btn */}
-              <button
-                onClick={() => setOpenFirstProject(false)}
-                className="absolute top-2 right-2  cursor-pointer hover:text-gray-300 transition-colors text-red-500"
+            <div className="mt-6 md:mt-8 sticky bottom-0 py-4">
+              <button 
+                onClick={() => window.open('https://mahajang214.github.io/devLab/', '_blank')} 
+                className="w-full px-6 md:px-8 py-2 md:py-3 bg-[#2FC0F5] text-white rounded-lg transition-all duration-300 text-sm md:text-base cursor-pointer hover:bg-[#2FC0F5]/90 hover:scale-[1.02] hover:shadow-[0_0_20px_rgba(47,192,245,0.3)] hover:translate-y-[-3px] active:scale-[0.98] active:translate-y-[1px] active:shadow-none"
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-6 w-6"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
+                Visit Project
               </button>
-              <motion.h2
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.2, duration: 0.4 }}
-                className="text-xl font-semibold mb-"
-              >
-                Specialities
-              </motion.h2>
-              <motion.ul
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.3, duration: 0.4 }}
-                className="list-disc pl-6 mb-2"
-              >
-                <li>Global Chat</li>
-                <li>Realtime Chat</li>
-              </motion.ul>
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.4, duration: 0.4 }}
-              >
-                <h3 className="font-semibold mb-2">Tech Used</h3>
-                <p className="mb-2">
-                  Frontend: Html, Css, Tailwindcss, GSAP, scrollTrigger,
-                  Reactjs, Zustand, Socket.io-client, React Router Dom, Axios,
-                  javascript.
-                </p>
-                <p>
-                  Backend: Nodejs, Expressjs, MongoDB, Mongoose, Socket.io,
-                  RESTful API, Jsonwebtoken.
-                </p>
-              </motion.div>
-            </motion.div>
-          ) : (
-            <button
-              onClick={() => {
-                return setOpenFirstProject(!openFirstProject);
-              }}
-              className="mt-4 md:hidden  px-10 py-2 bg-[#7127BA] border-2  border-[#ffffff82] text-white rounded-lg  cursor-pointer transition-all duration-300 font-medium backdrop-blur-2xl"
-            >
-              {" "}
-              details
-            </button>
-          )}
+            </div>
+          </div>
         </div>
-
-        <div
-          id="section"
-          className="w-[100vw] h-screen flex justify-center   items-center  text-white flex-col  absolute top-0 left-[100vw]"
-        >
         
-          <div
-            className={`py-2 grid grid-cols-1 md:grid-cols-2 relative
-              ${openSecondProject ? "w-[70%]" : "w-[90%]"} md:w-[65vw] `}
-          >
-            {/*  */}
-            <div className="hidden p2Left md:block bg-transparent p-5 z-10">
-            <h1 className="text-[40px]  projectsP1    font-bold      text-gray-300 z-10">
-            Full Stack Social Media Website
-          </h1>
-          <div
-              className="w-[85vw]  md:w-[35vw]  bg-[#464547] px-10 py-5    text-[#ffffffcd] rounded-lg relative"
-            >
-              {/* close btn */}
-              <button
-                onClick={() => {
-                  return setOpenSecondProject(!openSecondProject);
-                }}
-                className="absolute md:hidden top-2 right-6  cursor-pointer bg-transparent rounded p-2 hover:text-gray-300 transition-colors text-red-500"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-6 w-6"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-              </button>
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
-                className="space-y-4"
-              >
-                <motion.h2
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.2, duration: 0.4 }}
-                  className="text-xl font-semibold "
-                >
-                  Features
-                </motion.h2>
+        {/* second */}
+        <div
+          id="horizontalSections"
+          className="w-svw h-svh flex justify-center items-center  absolute top-0 left-[100svw] z-10 "
+        >
+          <div className="w-[85vw] md:w-[65vw] h-[90svh] bg-[#ffffff1b] p-4 md:p-8 rounded-2xl backdrop-blur-sm overflow-y-auto flex flex-col relative">
+            <h1 className="text-3xl rounded-2xl md:text-5xl font-bold text-white mb-4 md:mb-6 sticky top-0 bg-[#ffffff1b] py-4 z-10 w-full text-center">
+              ChatVerse
+            </h1>
 
-                <motion.ul
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.4, duration: 0.4 }}
-                  className="list-decimal pl-6 space-y-2"
-                >
-                  <motion.li
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.5 }}
-                  >
-                    JWT authentication and authorization
-                  </motion.li>
-                  <motion.li
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.6 }}
-                  >
-                    Profile management
-                  </motion.li>
-                  <motion.li
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.7 }}
-                  >
-                    Post creation and interaction (like, comment, share)
-                  </motion.li>
-                  <motion.li
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.8 }}
-                  >
-                    Real-time interactions
-                  </motion.li>
-                  <motion.li
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.9 }}
-                  >
-                    Explore and search functionality
-                  </motion.li>
-                  <motion.li
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 1.0 }}
-                  >
-                    1-on-1 Chat
-                  </motion.li>
-                </motion.ul>
+            <div className="flex-grow overflow-y-auto">
+              <div className="mb-6 md:mb-8">
+                <h2 className="text-xl md:text-2xl text-[#2FC0F5] mb-3 md:mb-4">
+                  Project Description
+                </h2>
+                <p className="text-gray-300 leading-relaxed text-sm md:text-base">
+                  ChatVerse is a real-time chatting platform that enables instant communication between users. It supports both one-to-one and group conversations, along with features like theme customization, profile management, and real-time notifications. Users can share images and media files, making conversations more engaging and interactive. The platform provides a seamless messaging experience with modern UI/UX design.
+                </p>
+              </div>
 
-                <motion.h2
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 1.2, duration: 0.4 }}
-                  className="text-xl font-semibold mt-2 mb-2"
-                >
-                  Tech Used
-                </motion.h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+                <div className="space-y-3 md:space-y-4">
+                  <h2 className="text-xl md:text-2xl text-[#2FC0F5]">
+                    Frontend
+                  </h2>
+                  <ul className="text-gray-300 space-y-1 md:space-y-2 text-sm md:text-base">
+                    <li>React.js</li>
+                    <li>Tailwind CSS</li>
+                    <li>Framer Motion</li>
+                    <li>GSAP</li>
+                    <li>Socket.io Client</li>
+                    <li>ScrollTrigger</li>
+                    <li>Zustand</li>
+                    <li>React Router Dom</li>
+                    <li>Axios</li>
+                  </ul>
+                </div>
 
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 1.4, duration: 0.4 }}
-                  className="space-y-2"
-                >
-                  <motion.p
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 1.5 }}
-                  >
-                    Frontend: Html, Css, Tailwindcss, GSAP, Framer Motion,
-                    scrollTrigger, Reactjs, Zustand, Socket.io-client, React
-                    Router Dom, Axios, javascript.
-                  </motion.p>
-                  <motion.p
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 1.6 }}
-                  >
-                    Backend: Nodejs, Expressjs, MongoDB, Mongoose, Socket.io,
-                    RESTful API, Jsonwebtoken, Multer.
-                  </motion.p>
-                </motion.div>
-              </motion.div>
-            </div>
+                <div className="space-y-3 md:space-y-4">
+                  <h2 className="text-xl md:text-2xl text-[#2FC0F5]">
+                    Backend
+                  </h2>
+                  <ul className="text-gray-300 space-y-1 md:space-y-2 text-sm md:text-base">
+                    <li>Node.js</li>
+                    <li>Express.js</li>
+                    <li>MongoDB</li>
+                    <li>Socket.io</li>
+                    <li>Mongoose</li>
+                    <li>RESTful API</li>
+                    <li>Jsonwebtoken</li>
+                  </ul>
 
-            <div className="w-full  flex mt-5 px-6  items-center">
-            <img className="w-10 h-auto" src={clickPic} alt="png" />
-            <img className="w-10 h-auto mx-5" src={clickPic} alt="png" />
-            </div>
-            </div>
-
-            {/* macbook code */}
-            <div className="w-full p2Right md:h-[60vh] md:mt-[15vh]  projectsP1 rounded-lg pt-2 pl-2 border-l-2 border-l-[#ffffff79] border-t-2  border-t-[#ffffff79] bg-linear-to-tl to-[#7127BA]  to-60% from-[#fff]  overflow-hidden backdrop-blur-lg">
-              <img
-                className="backdrop-blur-2xl scale-[3] translate-x-[320px] translate-y-[210px] sm:translate-x-[100%] sm:translate-y-[100%]"
-                src={`${project2}`}
-                alt=""
-              />
+                  <h2 className="text-xl md:text-2xl text-[#2FC0F5] mt-4 md:mt-6">
+                    Security Features
+                  </h2>
+                  <ul className="text-gray-300 space-y-1 md:space-y-2 text-sm md:text-base">
+                    <li>JWT Authentication</li>
+                    <li>bcrypt Password Hashing</li>
+                  </ul>
+                </div>
+              </div>
             </div>
           </div>
-
-          {/* project details */}
-          {openSecondProject ? (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, ease: "easeOut" }}
-              className="w-[85vw] mb-1 bg-[#464547] px-4 py-1  md:w-[65vw] backdrop-blur-3xl text-[#ffffffcd] text-[14px] rounded-lg relative"
-            >
-              {/* close btn */}
-              <button
-                onClick={() => {
-                  return setOpenSecondProject(!openSecondProject);
-                }}
-                className="absolute md:hidden top-2 right-6  cursor-pointer bg-transparent rounded p-2 hover:text-gray-300 transition-colors text-red-500"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-6 w-6"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-              </button>
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
-                className="space-y-4"
-              >
-                <motion.h2
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.2, duration: 0.4 }}
-                  className="text-xl font-semibold "
-                >
-                  Features
-                </motion.h2>
-
-                <motion.ul
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.4, duration: 0.4 }}
-                  className="list-decimal pl-6 space-y-2"
-                >
-                  <motion.li
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.5 }}
-                  >
-                    JWT authentication and authorization
-                  </motion.li>
-                  <motion.li
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.6 }}
-                  >
-                    Profile management
-                  </motion.li>
-                  <motion.li
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.7 }}
-                  >
-                    Post creation and interaction (like, comment, share)
-                  </motion.li>
-                  <motion.li
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.8 }}
-                  >
-                    Real-time interactions
-                  </motion.li>
-                  <motion.li
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.9 }}
-                  >
-                    Explore and search functionality
-                  </motion.li>
-                  <motion.li
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 1.0 }}
-                  >
-                    1-on-1 Chat
-                  </motion.li>
-                </motion.ul>
-
-                <motion.h2
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 1.2, duration: 0.4 }}
-                  className="text-xl font-semibold mt-2 mb-2"
-                >
-                  Tech Used
-                </motion.h2>
-
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 1.4, duration: 0.4 }}
-                  className="space-y-2"
-                >
-                  <motion.p
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 1.5 }}
-                  >
-                    Frontend: Html, Css, Tailwindcss, GSAP, Framer Motion,
-                    scrollTrigger, Reactjs, Zustand, Socket.io-client, React
-                    Router Dom, Axios, javascript.
-                  </motion.p>
-                  <motion.p
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 1.6 }}
-                  >
-                    Backend: Nodejs, Expressjs, MongoDB, Mongoose, Socket.io,
-                    RESTful API, Jsonwebtoken, Multer.
-                  </motion.p>
-                </motion.div>
-              </motion.div>
-            </motion.div>
-          ) : (
-            <button
-              onClick={() => {
-                return setOpenSecondProject(!openSecondProject);
-              }}
-              className="mt-4 md:hidden px-10 py-2 bg-[#7127BA] border-2  border-[#ffffff82] text-white rounded-lg  cursor-pointer transition-all duration-300 font-medium backdrop-blur-2xl"
-            >
-              {" "}
-              details
-            </button>
-          )}
         </div>
 
+        {/* third */}
         <div
-          id="section"
-          className="w-[100vw] h-screen flex justify-center   items-center  text-white flex-col  absolute top-0 left-[200vw]"
+          id="horizontalSections"
+          className="w-svw h-svh  flex justify-center items-center  absolute top-0 left-[200vw] z-10 "
+        >
+          <div className="w-[85vw] md:w-[65vw] h-[90svh] bg-[#ffffff1b] p-4 md:p-8 rounded-2xl backdrop-blur-sm overflow-y-auto flex flex-col relative">
+            <h1 className="text-3xl rounded-2xl md:text-5xl font-bold text-white mb-4 md:mb-6 sticky top-0 bg-[#ffffff1b] py-4 z-10 w-full text-center">
+              SocialConnect
+            </h1>
+
+            <div className="flex-grow overflow-y-auto">
+              <div className="mb-6 md:mb-8">
+                <h2 className="text-xl md:text-2xl text-[#2FC0F5] mb-3 md:mb-4">
+                  Project Description
+                </h2>
+                <p className="text-gray-300 leading-relaxed text-sm md:text-base">
+                  SocialConnect is a modern social media platform that enables real-time interactions and content sharing. It features a robust authentication system, profile management, and interactive post features. The platform supports media sharing, direct messaging, and real-time notifications.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+                <div className="space-y-3 md:space-y-4">
+                  <h2 className="text-xl md:text-2xl text-[#2FC0F5]">
+                    Frontend
+                  </h2>
+                  <ul className="text-gray-300 space-y-1 md:space-y-2 text-sm md:text-base">
+                    <li>React.js</li>
+                    <li>Tailwind CSS</li>
+                    <li>Framer Motion</li>
+                    <li>Socket.io Client</li>
+                    <li>GSAP</li>
+                    <li>ScrollTrigger</li>
+                    <li>Zustand</li>
+                    <li>React Router Dom</li>
+                    <li>Axios</li>
+                  </ul>
+
+                  <h2 className="text-xl md:text-2xl text-[#2FC0F5] mt-4 md:mt-6">
+                    Backend
+                  </h2>
+                  <ul className="text-gray-300 space-y-1 md:space-y-2 text-sm md:text-base">
+                    <li>Node.js</li>
+                    <li>Express.js</li>
+                    <li>MongoDB</li>
+                    <li>Socket.io</li>
+                    <li>Mongoose</li>
+                    <li>RESTful API</li>
+                    <li>Jsonwebtoken</li>
+                    <li>Multer</li>
+                  </ul>
+                </div>
+
+                <div className="space-y-3 md:space-y-4">
+                  <h2 className="text-xl md:text-2xl text-[#2FC0F5]">
+                    Key Features
+                  </h2>
+                  <ul className="text-gray-300 space-y-1 md:space-y-2 text-sm md:text-base">
+                    <li>JWT authentication and authorization</li>
+                    <li>Profile management</li>
+                    <li>Post creation and interaction (like, comment, share)</li>
+                    <li>Real-time interactions</li>
+                    <li>Explore and search functionality</li>
+                    <li>1-on-1 Chat</li>
+                  </ul>
+
+                  <h2 className="text-xl md:text-2xl text-[#2FC0F5] mt-4 md:mt-6">
+                    Security Features
+                  </h2>
+                  <ul className="text-gray-300 space-y-1 md:space-y-2 text-sm md:text-base">
+                    <li>JWT Authentication</li>
+                    <li>Password Encryption</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div className="mt-6 md:mt-8">
+                <h2 className="text-xl md:text-2xl text-[#2FC0F5] mb-3 md:mb-4">
+                  Additional Features
+                </h2>
+                <ul className="text-gray-300 space-y-1 md:space-y-2 text-sm md:text-base">
+                  <li>Search Functionality</li>
+                  <li>Media Upload and Management</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* four */}
+        <div
+          id="horizontalSections"
+          className="w-svw h-svh  flex justify-center items-center  absolute top-0 left-[300vw] z-10 "
         >
           <div className="w-[85vw] md:w-[65vw] relative">
             <img
@@ -2796,15 +2733,16 @@ function App() {
             />
 
             <h1 className=" p3Text text-[50px] md:text-[90px] md:leading-20 leading-13 z-10 text-gray-400 text-center">
-              Helping businesses 
-              <span className="font-bold  text-[#fff] mx-1 ">increase revenue </span>{" "}
+              Helping businesses
+              <span className="font-bold  text-[#fff] mx-1 ">
+                increase revenue{" "}
+              </span>{" "}
               through fast, secure{" "}
               <span className="font-bold text-[#fff] mx-1">websites</span>
             </h1>
           </div>
         </div>
       </div>
-      {/* Ready to build something that performs and sells? Let’s talk. */}
 
       {/* footer */}
       <div className="bg-linear-to-t from-[#7127BA] rounded-t-[20px] to-[#070E16]  pt-4 w-full ">
